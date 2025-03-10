@@ -1,0 +1,92 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0" version="26.1.0">
+  <diagram name="Page-1" id="MHDcob_EQVDFGCwvhh3o">
+    <mxGraphModel dx="1390" dy="768" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" background="light-dark(#ffffff, #121212)" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-60" value="" style="swimlane;startSize=0;fontColor=#143642;swimlaneLine=1;container=1;collapsible=0;fontFamily=Verdana;fontSize=10;labelBackgroundColor=none;fillColor=#FAE5C7;strokeColor=#0F8B8D;" vertex="1" parent="1">
+          <mxGeometry width="1240" height="160" as="geometry">
+            <mxRectangle width="50" height="40" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-50" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;fontColor=default;spacing=3;fontFamily=Verdana;fontSize=10;strokeColor=#A8201A;" edge="1" parent="b_ExJnbC9G1EJR0HtZlz-60" source="b_ExJnbC9G1EJR0HtZlz-48" target="b_ExJnbC9G1EJR0HtZlz-49">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-48" value="Invitee receives an email with a unique link" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;labelBackgroundColor=none;rounded=0;fontFamily=Verdana;fontSize=10;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-60">
+          <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-52" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;fontColor=default;spacing=3;fontFamily=Verdana;fontSize=10;strokeColor=#A8201A;" edge="1" parent="b_ExJnbC9G1EJR0HtZlz-60" source="b_ExJnbC9G1EJR0HtZlz-49" target="b_ExJnbC9G1EJR0HtZlz-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-49" value="Invitee visits the page" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;labelBackgroundColor=none;rounded=0;spacing=3;fontFamily=Verdana;fontSize=10;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-60">
+          <mxGeometry x="240" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-55" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;fontColor=default;spacing=3;fontFamily=Verdana;fontSize=10;strokeColor=#A8201A;" edge="1" parent="b_ExJnbC9G1EJR0HtZlz-60" source="b_ExJnbC9G1EJR0HtZlz-51" target="b_ExJnbC9G1EJR0HtZlz-54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-51" value="&lt;div&gt;Invitee selects attendance status and food options for each guest&lt;/div&gt;" style="whiteSpace=wrap;html=1;strokeWidth=2;labelBackgroundColor=none;rounded=0;spacing=3;fontFamily=Verdana;fontSize=10;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-60">
+          <mxGeometry x="440" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-57" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;fontColor=default;spacing=3;fontFamily=Verdana;fontSize=10;strokeColor=#A8201A;" edge="1" parent="b_ExJnbC9G1EJR0HtZlz-60" source="b_ExJnbC9G1EJR0HtZlz-54" target="b_ExJnbC9G1EJR0HtZlz-56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-54" value="Data is saved in the database" style="shape=datastore;whiteSpace=wrap;html=1;labelBackgroundColor=none;rounded=0;spacing=3;fontFamily=Verdana;fontSize=10;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-60">
+          <mxGeometry x="640" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-59" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;fontColor=default;spacing=3;fontFamily=Verdana;fontSize=10;strokeColor=#A8201A;" edge="1" parent="b_ExJnbC9G1EJR0HtZlz-60" source="b_ExJnbC9G1EJR0HtZlz-56" target="b_ExJnbC9G1EJR0HtZlz-58">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-56" value="Confirmation email is sent to Invitee and Admin" style="whiteSpace=wrap;html=1;labelBackgroundColor=none;rounded=0;perimeterSpacing=0;strokeWidth=1;spacingTop=0;spacingLeft=0;spacing=3;fontFamily=Verdana;fontSize=10;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-60">
+          <mxGeometry x="840" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-58" value="The unique link is invalidated" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;labelBackgroundColor=none;rounded=0;spacing=3;fontFamily=Verdana;fontSize=10;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-60">
+          <mxGeometry x="1040" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-64" value="Invite RSVP Flow" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontStyle=1;fontSize=12;labelBackgroundColor=none;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-60">
+          <mxGeometry x="10" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-65" value="" style="swimlane;startSize=0;fontColor=#143642;swimlaneLine=1;container=1;collapsible=0;fontFamily=Verdana;fontSize=10;labelBackgroundColor=none;fillColor=#FAE5C7;strokeColor=#0F8B8D;" vertex="1" parent="1">
+          <mxGeometry y="200" width="1240" height="160" as="geometry">
+            <mxRectangle width="50" height="40" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-79" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;strokeColor=#A8201A;fontColor=default;" edge="1" parent="b_ExJnbC9G1EJR0HtZlz-65" source="b_ExJnbC9G1EJR0HtZlz-67" target="b_ExJnbC9G1EJR0HtZlz-78">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-67" value="Accesses Admin page" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;labelBackgroundColor=none;rounded=0;fontFamily=Verdana;fontSize=10;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-65">
+          <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-76" value="Invite is sent to invitee" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;labelBackgroundColor=none;rounded=0;spacing=3;fontFamily=Verdana;fontSize=10;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-65">
+          <mxGeometry x="1040" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-77" value="Admin Management Flow" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Verdana;fontStyle=1;spacing=2;fontSize=12;labelBackgroundColor=none;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-65">
+          <mxGeometry x="10" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-80" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;strokeColor=#A8201A;fontColor=default;" edge="1" parent="b_ExJnbC9G1EJR0HtZlz-65" source="b_ExJnbC9G1EJR0HtZlz-78" target="b_ExJnbC9G1EJR0HtZlz-69">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-78" value="Logs in via ASP.NET Identity or Google External Auth" style="whiteSpace=wrap;html=1;fontSize=10;fontFamily=Verdana;strokeWidth=2;labelBackgroundColor=none;rounded=0;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-65">
+          <mxGeometry x="240" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-69" value="Dashboard view" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;labelBackgroundColor=none;rounded=0;spacing=3;fontFamily=Verdana;fontSize=10;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-65">
+          <mxGeometry x="440" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-71" value="&lt;div&gt;Admin can manually add or update invites/guests&lt;/div&gt;" style="whiteSpace=wrap;html=1;strokeWidth=2;labelBackgroundColor=none;rounded=0;spacing=3;fontFamily=Verdana;fontSize=10;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-65">
+          <mxGeometry x="640" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-68" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;fontColor=default;spacing=3;fontFamily=Verdana;fontSize=10;strokeColor=#A8201A;" edge="1" parent="b_ExJnbC9G1EJR0HtZlz-65" source="b_ExJnbC9G1EJR0HtZlz-69" target="b_ExJnbC9G1EJR0HtZlz-71">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-81" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;strokeColor=#A8201A;fontColor=default;" edge="1" parent="b_ExJnbC9G1EJR0HtZlz-65" source="b_ExJnbC9G1EJR0HtZlz-73" target="b_ExJnbC9G1EJR0HtZlz-76">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-73" value="Data is saved in the database" style="shape=datastore;whiteSpace=wrap;html=1;labelBackgroundColor=none;rounded=0;spacing=3;fontFamily=Verdana;fontSize=10;fillColor=#FAE5C7;strokeColor=#0F8B8D;fontColor=#143642;" vertex="1" parent="b_ExJnbC9G1EJR0HtZlz-65">
+          <mxGeometry x="840" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b_ExJnbC9G1EJR0HtZlz-70" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;fontColor=default;spacing=3;fontFamily=Verdana;fontSize=10;strokeColor=#A8201A;" edge="1" parent="b_ExJnbC9G1EJR0HtZlz-65" source="b_ExJnbC9G1EJR0HtZlz-71" target="b_ExJnbC9G1EJR0HtZlz-73">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
