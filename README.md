@@ -61,7 +61,7 @@ A modern wedding invitation and RSVP management system built with .NET 9, React,
   - Name (NVARCHAR)
   - RsvpStatusId (GUID, FOREIGN KEY)
   - MainFoodOptionId (GUID, FOREIGN KEY, NULL)
-  - DessertFoodOtionId (GUID, FOREIGN KEY, NULL)
+  - DessertFoodOptionId (GUID, FOREIGN KEY, NULL)
 
 - ApplicationUser
 
