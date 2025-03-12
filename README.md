@@ -44,6 +44,7 @@ A modern wedding invitation and RSVP management system built with .NET 9, React,
 - Invite
 
   - Id (GUID, PRIMARY KEY)
+  - EventId (GUID, FOREIGN KEY)
   - Email (NVARCHAR, UNIQUE)
   - HouseholdName (NVARCHAR)
   - UniqueLinkToken (GUID, NULL)

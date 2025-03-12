@@ -27,5 +27,10 @@ internal sealed class EventConfiguration : IEntityTypeConfiguration<Event>
 
         builder.Property(p => p.Time)
                .IsRequired();
+
+        builder.HasMany(e => e.Invites)
+               .WithOne(i => i.Event)
+               .HasForeignKey(fk => fk.EventId)
+               .OnDelete(DeleteBehavior.Cascade);
     }
 }

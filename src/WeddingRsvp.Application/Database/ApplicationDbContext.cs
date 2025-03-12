@@ -7,7 +7,7 @@ internal class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
-        // Empty Constructot.
+        // Empty constructor.
     }
 
     public DbSet<Event> Events { get; set; }
