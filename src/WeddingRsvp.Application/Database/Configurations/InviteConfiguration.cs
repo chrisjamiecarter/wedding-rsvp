@@ -9,7 +9,7 @@ internal sealed class InviteConfiguration : IEntityTypeConfiguration<Invite>
 {
     public void Configure(EntityTypeBuilder<Invite> builder)
     {
-        builder.ToTable(TableConstants.Event, SchemaConstants.Core);
+        builder.ToTable(TableConstants.Invite, SchemaConstants.Core);
 
         builder.HasKey(pk =>  pk.Id);
 

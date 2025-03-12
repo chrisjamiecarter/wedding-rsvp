@@ -11,5 +11,6 @@ public sealed class Event
     public required TimeOnly Time { get; set; }
     public string DressCode { get; set; } = string.Empty;
 
+    public ICollection<EventFoodOption>? EventFoodOptions { get; }
     public ICollection<Invite>? Invites { get; }
 }
