@@ -1,3 +1,5 @@
+using WeddingRsvp.Application;
+
 namespace WeddingRsvp.Api;
 
 internal static class Program
@@ -6,23 +8,14 @@ internal static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddAuthorization();
+        builder.Services.AddApplication(builder.Configuration);
 
-        builder.Services.AddOpenApi();
+        builder.Services.AddApi();
 
         var app = builder.Build();
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        // TODO: Map API endpoints.
-        
+        app.AddMiddleware();
+                
         await app.RunAsync();
     }
 }
