@@ -1,6 +1,11 @@
-# Wedding RSVP
+<div align="center">
+    <img src="./_resources/wedding-rsvp-logo.png" alt="logo" width="100px" />
+    <h1>Wedding RSVP</h1>
+</div>
 
-A modern wedding invitation and RSVP management system built with .NET 9, React, and ASP.NET Identity.
+Welcome to the **Wedding RSVP** App!
+
+This is a modern wedding invitation and RSVP management system built with .NET 9, React, and ASP.NET Identity.
 
 ## High-Level Architecture
 
