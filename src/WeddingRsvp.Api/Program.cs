@@ -14,7 +14,7 @@ internal static class Program
 
         var app = builder.Build();
 
-        app.AddApplicationMiddleware();
+        await app.AddApplicationMiddlewareAsync();
 
         app.AddApiMiddleware();
                 

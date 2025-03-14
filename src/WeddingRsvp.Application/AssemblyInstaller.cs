@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +25,22 @@ public static class AssemblyInstaller
             options.UseNpgsql(connectionString, npgsqlOptions =>
             {
                 npgsqlOptions.UseAdminDatabase("postgres");
+            });
+            options.UseSeeding((context, _) =>
+            {
+                var email = "chrisjamiecarter@gmail.com";
+                var user = context.Set<ApplicationUser>().SingleOrDefault(x => x.Email == email);
+                if (user is null)
+                {
+                    user = new ApplicationUser
+                    {
+                        UserName = email,
+                        Email = email,
+                    };
+
+                    context.Set<ApplicationUser>().Add(user);
+                    context.SaveChanges();
+                }
             });
         });
 
@@ -67,18 +82,31 @@ public static class AssemblyInstaller
         services.AddAuthorizationBuilder()
         .AddPolicy(AuthConstants.AdminPolicyName, policy =>
         {
-            policy.RequireRole(AuthConstants.AdminRoleName);
+            policy.RequireClaim(AuthConstants.AdminClaimName, "true");
         });
 
         services.AddScoped<IAuthService, AuthService>();
 
+        services.Configure<SeederOptions>(configuration.GetSection(nameof(SeederOptions)));
+        services.AddScoped<SeederService>();
+
         return services;
     }
 
-    public static WebApplication AddApplicationMiddleware(this WebApplication app)
+    public static async Task<WebApplication> AddApplicationMiddlewareAsync(this WebApplication app)
     {
-        //app.MapIdentityApi<ApplicationUser>();
+        using var scope = app.Services.CreateScope();
+        var services = scope.ServiceProvider;
+        await services.SeedDatabaseAsync();
 
         return app;
+    }
+
+    public static async Task<IServiceProvider> SeedDatabaseAsync(this IServiceProvider serviceProvider)
+    {
+        var seeder = serviceProvider.GetRequiredService<SeederService>();
+        await seeder.SeedDatabaseAsync();
+
+        return serviceProvider;
     }
 }
