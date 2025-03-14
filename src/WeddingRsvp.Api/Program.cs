@@ -8,13 +8,15 @@ internal static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddApplication(builder.Configuration);
+        builder.Services.AddApplicationServices(builder.Configuration);
 
-        builder.Services.AddApi();
+        builder.Services.AddApiServices();
 
         var app = builder.Build();
 
-        app.AddMiddleware();
+        app.AddApplicationMiddleware();
+
+        app.AddApiMiddleware();
                 
         await app.RunAsync();
     }

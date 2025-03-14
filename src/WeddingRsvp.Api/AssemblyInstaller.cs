@@ -1,16 +1,32 @@
-﻿namespace WeddingRsvp.Api;
+﻿using Asp.Versioning;
+using WeddingRsvp.Api.Endpoints;
+using WeddingRsvp.Api.Endpoints.V1;
+
+namespace WeddingRsvp.Api;
 
 public static class AssemblyInstaller
 {
-    public static IServiceCollection AddApi(this IServiceCollection services)
+    public static IServiceCollection AddApiServices(this IServiceCollection services)
     {
+        services.AddApiVersioning(options =>
+        {
+            options.DefaultApiVersion = new ApiVersion(1.0);
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.ReportApiVersions = true;
+            options.ApiVersionReader = new MediaTypeApiVersionReader("api-version");
+        }).AddApiExplorer();
+
+        services.AddEndpointsApiExplorer();
+    
         services.AddOpenApi();
 
         return services;
     }
 
-    public static WebApplication AddMiddleware(this WebApplication app)
+    public static WebApplication AddApiMiddleware(this WebApplication app)
     {
+        app.CreateApiVersionSet();
+
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
@@ -22,7 +38,7 @@ public static class AssemblyInstaller
 
         app.UseAuthorization();
 
-        // TODO: Map API endpoints.
+        app.MapApiV1Endpoints();
 
         return app;
     }

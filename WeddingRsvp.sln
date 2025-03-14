@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingRsvp.Api", "src\Wedd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingRsvp.Application", "src\WeddingRsvp.Application\WeddingRsvp.Application.csproj", "{800FE4D0-4001-4D06-AAA7-D15AD16D29BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeddingRsvp.Contracts", "src\WeddingRsvp.Contracts\WeddingRsvp.Contracts.csproj", "{EEA00B68-B6C1-45A9-9F7E-696B8F09146A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{800FE4D0-4001-4D06-AAA7-D15AD16D29BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{800FE4D0-4001-4D06-AAA7-D15AD16D29BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{800FE4D0-4001-4D06-AAA7-D15AD16D29BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEA00B68-B6C1-45A9-9F7E-696B8F09146A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEA00B68-B6C1-45A9-9F7E-696B8F09146A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEA00B68-B6C1-45A9-9F7E-696B8F09146A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEA00B68-B6C1-45A9-9F7E-696B8F09146A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9465952A-CFB1-42F7-AA81-8EF48AE432F8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{800FE4D0-4001-4D06-AAA7-D15AD16D29BD} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{EEA00B68-B6C1-45A9-9F7E-696B8F09146A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F9AAE55-69B0-41F0-B186-EA36CCE64804}

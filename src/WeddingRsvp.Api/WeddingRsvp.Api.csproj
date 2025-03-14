@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Http" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
       <PrivateAssets>all</PrivateAssets>
@@ -14,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WeddingRsvp.Application\WeddingRsvp.Application.csproj" />
+    <ProjectReference Include="..\WeddingRsvp.Contracts\WeddingRsvp.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
