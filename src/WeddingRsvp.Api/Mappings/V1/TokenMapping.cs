@@ -1,5 +1,5 @@
 ﻿using WeddingRsvp.Application.Models;
-using WeddingRsvp.Contracts.Responses.V1;
+using WeddingRsvp.Contracts.Responses.V1.Auth;
 
 namespace WeddingRsvp.Api.Mappings.V1;
 

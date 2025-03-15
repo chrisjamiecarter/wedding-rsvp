@@ -2,7 +2,7 @@
 using WeddingRsvp.Api.Endpoints.V1;
 using WeddingRsvp.Application.Entities;
 using WeddingRsvp.Application.Services;
-using WeddingRsvp.Contracts.Requests.V1;
+using WeddingRsvp.Contracts.Requests.V1.Auth;
 
 namespace WeddingRsvp.Api.Endpoints.V1.Auth;
 

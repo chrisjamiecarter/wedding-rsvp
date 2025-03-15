@@ -11,4 +11,11 @@ public static class Routes
         public const string Login = $"{Base}/login";
         public const string Register = $"{Base}/register";
     }
+
+    public static class Events
+    {
+        private const string Base = $"{ApiBase}/events";
+
+        public const string GetAll = Base;
+    }
 }

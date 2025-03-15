@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using WeddingRsvp.Api.Endpoints;
 using WeddingRsvp.Api.Endpoints.V1;
+using WeddingRsvp.Api.Middlewares;
 
 namespace WeddingRsvp.Api;
 
@@ -37,6 +38,8 @@ public static class AssemblyInstaller
         app.UseAuthentication();
 
         app.UseAuthorization();
+
+        app.UseMiddleware<ValidationMappingMiddleware>();
 
         app.MapApiV1Endpoints();
 

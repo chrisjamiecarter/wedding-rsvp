@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -26,28 +27,12 @@ public static class AssemblyInstaller
             {
                 npgsqlOptions.UseAdminDatabase("postgres");
             });
-            options.UseSeeding((context, _) =>
-            {
-                var email = "chrisjamiecarter@gmail.com";
-                var user = context.Set<ApplicationUser>().SingleOrDefault(x => x.Email == email);
-                if (user is null)
-                {
-                    user = new ApplicationUser
-                    {
-                        UserName = email,
-                        Email = email,
-                    };
-
-                    context.Set<ApplicationUser>().Add(user);
-                    context.SaveChanges();
-                }
-            });
         });
 
         services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
                 //.AddSignInManager()
-                .AddDefaultTokenProviders();
+                //.AddDefaultTokenProviders();
 
         JwtOptions jwtOptions = configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>() ?? throw new InvalidOperationException("Configuration section 'JwtOptions' not found");
         services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
@@ -58,7 +43,7 @@ public static class AssemblyInstaller
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         })
-        .AddJwtBearer(IdentityConstants.BearerScheme, options =>
+        .AddJwtBearer(options =>
         {
             options.TokenValidationParameters = new TokenValidationParameters
             {
@@ -86,9 +71,12 @@ public static class AssemblyInstaller
         });
 
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IEventService, EventService>();
 
         services.Configure<SeederOptions>(configuration.GetSection(nameof(SeederOptions)));
         services.AddScoped<SeederService>();
+
+        services.AddValidatorsFromAssembly(AssemblyReference.Assembly, ServiceLifetime.Singleton);
 
         return services;
     }
