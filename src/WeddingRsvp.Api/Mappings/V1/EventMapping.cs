@@ -22,13 +22,20 @@ public static class EventMapping
         };
     }
 
-    //public static Event ToEntity(this UpdateEventRequest request, Guid id)
-    //{
-    //    return new Event
-    //    {
-    //        Id = id,
-    //    };
-    //}
+    public static Event ToEntity(this UpdateEventRequest request, Guid id)
+    {
+        return new Event
+        {
+            Id = id,
+            Name = request.Name,
+            Description = request.Description,
+            Venue = request.Venue,
+            Address = request.Address,
+            Date = request.Date,
+            Time = request.Time,
+            DressCode = request.DressCode,
+        };
+    }
 
     public static EventResponse ToResponse(this Event entity)
     {

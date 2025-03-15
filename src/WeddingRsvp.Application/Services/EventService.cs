@@ -31,6 +31,21 @@ internal class EventService : IEventService
         return result > 0;
     }
 
+    public async Task<bool> DeleteByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var existingEvent = await _dbContext.Events.FindAsync([id], cancellationToken);
+        if (existingEvent is null)
+        {
+            return false;
+        }
+
+        _dbContext.Events.Remove(existingEvent);
+
+        var result = await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return result > 0;
+    }
+
     public async Task<PaginatedList<Event>> GetAllAsync(GetAllEventsOptions options, CancellationToken cancellationToken = default)
     {
         await _getAllEventsOptionsValidator.ValidateAndThrowAsync(options, cancellationToken);
@@ -77,5 +92,22 @@ internal class EventService : IEventService
     public async Task<Event?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _dbContext.Events.SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
+    }
+
+    public async Task<Event?> UpdateAsync(Event evnt, CancellationToken cancellationToken = default)
+    {
+        await _eventValidator.ValidateAndThrowAsync(evnt, cancellationToken);
+
+        var existingEvent = await _dbContext.Events.FindAsync([evnt.Id], cancellationToken);
+        if (existingEvent is null)
+        {
+            return null;
+        }
+
+        _dbContext.Events.Entry(existingEvent).CurrentValues.SetValues(evnt);
+        
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        
+        return evnt;
     }
 }
