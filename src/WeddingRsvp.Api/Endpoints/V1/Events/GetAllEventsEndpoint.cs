@@ -15,7 +15,6 @@ public static class GetAllEventsEndpoint
         app.MapGet(Routes.Events.GetAll,
             async ([AsParameters] GetAllEventsRequest request,
                    IEventService eventService,
-                   HttpContext context,
                    CancellationToken cancellationToken) =>
             {
                 var options = request.ToOptions();
@@ -30,7 +29,7 @@ public static class GetAllEventsEndpoint
             .RequireAuthorization(AuthConstants.AdminPolicyName)
             .WithApiVersionSet(ApiVersioning.ApiVersionSet!)
             .HasApiVersion(1.0);
-        //.CacheOutput("MovieCache");
+            //.CacheOutput("EventCache");
 
         return app;
     }
