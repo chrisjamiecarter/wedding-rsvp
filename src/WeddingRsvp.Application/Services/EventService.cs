@@ -60,4 +60,9 @@ internal class EventService : IEventService
 
         return PaginatedList<Event>.Create(items, count, options.PageNumber, options.PageSize);
     }
+
+    public async Task<Event?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Events.SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
+    }
 }
