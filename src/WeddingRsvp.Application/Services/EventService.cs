@@ -10,12 +10,24 @@ namespace WeddingRsvp.Application.Services;
 internal class EventService : IEventService
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly IValidator<Event> _eventValidator;
     private readonly IValidator<GetAllEventsOptions> _getAllEventsOptionsValidator;
 
     public EventService(ApplicationDbContext dbContext, IValidator<GetAllEventsOptions> getAllEventsOptionsValidator)
     {
         _dbContext = dbContext;
         _getAllEventsOptionsValidator = getAllEventsOptionsValidator;
+    }
+
+    public async Task<bool> CreateAsync(Event evnt, CancellationToken cancellationToken = default)
+    {
+        await _eventValidator.ValidateAndThrowAsync(evnt, cancellationToken);
+
+        await _dbContext.Events.AddAsync(evnt, cancellationToken);
+        
+        var result = await _dbContext.SaveChangesAsync(cancellationToken);
+        
+        return result > 0;
     }
 
     public async Task<PaginatedList<Event>> GetAllAsync(GetAllEventsOptions options, CancellationToken cancellationToken = default)

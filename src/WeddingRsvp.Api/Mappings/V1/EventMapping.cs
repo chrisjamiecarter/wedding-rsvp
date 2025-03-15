@@ -1,19 +1,26 @@
 ﻿using WeddingRsvp.Application.Entities;
 using WeddingRsvp.Application.Models;
-using WeddingRsvp.Contracts.Requests;
+using WeddingRsvp.Contracts.Requests.V1.Events;
 using WeddingRsvp.Contracts.Responses.V1.Events;
 
 namespace WeddingRsvp.Api.Mappings.V1;
 
 public static class EventMapping
 {
-    //public static Event ToEntity(this CreateEventRequest request)
-    //{
-    //    return new Event
-    //    {
-    //        Id = Guid.CreateVersion7(),
-    //    };
-    //}
+    public static Event ToEntity(this CreateEventRequest request)
+    {
+        return new Event
+        {
+            Id = Guid.CreateVersion7(),
+            Name = request.Name,
+            Description = request.Description,
+            Venue = request.Venue,
+            Address = request.Address,
+            Date = request.Date,
+            Time = request.Time,
+            DressCode = request.DressCode,
+        };
+    }
 
     //public static Event ToEntity(this UpdateEventRequest request, Guid id)
     //{
