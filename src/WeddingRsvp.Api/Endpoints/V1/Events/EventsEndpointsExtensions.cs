@@ -5,6 +5,7 @@ public static class EventsEndpointsExtensions
     public static IEndpointRouteBuilder MapEventsEndpoints(this IEndpointRouteBuilder app)
     {
         app.MapGetAllEvents();
+        app.MapGetEvent();
 
         return app;
     }
