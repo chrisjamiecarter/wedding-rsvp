@@ -13,9 +13,10 @@ internal class EventService : IEventService
     private readonly IValidator<Event> _eventValidator;
     private readonly IValidator<GetAllEventsOptions> _getAllEventsOptionsValidator;
 
-    public EventService(ApplicationDbContext dbContext, IValidator<GetAllEventsOptions> getAllEventsOptionsValidator)
+    public EventService(ApplicationDbContext dbContext, IValidator<Event> eventValidator, IValidator<GetAllEventsOptions> getAllEventsOptionsValidator)
     {
         _dbContext = dbContext;
+        _eventValidator = eventValidator;
         _getAllEventsOptionsValidator = getAllEventsOptionsValidator;
     }
 

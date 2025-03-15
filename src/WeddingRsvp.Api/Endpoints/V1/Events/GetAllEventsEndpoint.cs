@@ -26,6 +26,7 @@ public static class GetAllEventsEndpoint
             })
             .WithName(Name)
             .Produces<EventsResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status401Unauthorized)
             .RequireAuthorization(AuthConstants.AdminPolicyName)
             .WithApiVersionSet(ApiVersioning.ApiVersionSet!)
             .HasApiVersion(1.0);

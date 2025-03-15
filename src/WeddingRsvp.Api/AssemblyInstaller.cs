@@ -1,7 +1,10 @@
 ﻿using Asp.Versioning;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using WeddingRsvp.Api.Endpoints;
 using WeddingRsvp.Api.Endpoints.V1;
 using WeddingRsvp.Api.Middlewares;
+using WeddingRsvp.Api.OpenApi;
 
 namespace WeddingRsvp.Api;
 
@@ -18,7 +21,13 @@ public static class AssemblyInstaller
         }).AddApiExplorer();
 
         services.AddEndpointsApiExplorer();
-    
+
+        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+        services.AddSwaggerGen(options =>
+        {
+            options.OperationFilter<SwaggerDefaultValues>();
+        });
+
         services.AddOpenApi();
 
         return services;
@@ -31,12 +40,19 @@ public static class AssemblyInstaller
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                foreach (var description in app.DescribeApiVersions())
+                {
+                    options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName);
+                }
+            });
         }
 
         app.UseHttpsRedirection();
 
         app.UseAuthentication();
-
         app.UseAuthorization();
 
         app.UseMiddleware<ValidationMappingMiddleware>();

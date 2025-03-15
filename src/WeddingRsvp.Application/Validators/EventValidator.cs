@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using WeddingRsvp.Application.Database;
 using WeddingRsvp.Application.Entities;
 
 namespace WeddingRsvp.Application.Validators;

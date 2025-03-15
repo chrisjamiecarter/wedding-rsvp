@@ -14,7 +14,7 @@ public static class CreateEventEndpoint
     public static IEndpointRouteBuilder MapCreateEvent(this IEndpointRouteBuilder app)
     {
         app.MapPost(Routes.Events.Create,
-            async ([AsParameters] CreateEventRequest request,
+            async (CreateEventRequest request,
                    IEventService eventService,
                    CancellationToken cancellationToken) =>
             {
@@ -30,6 +30,7 @@ public static class CreateEventEndpoint
             .WithName(Name)
             .Produces<EventResponse>(StatusCodes.Status201Created)
             .Produces<ValidationFailureResponse>(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status401Unauthorized)
             .RequireAuthorization(AuthConstants.AdminPolicyName)
             .WithApiVersionSet(ApiVersioning.ApiVersionSet!)
             .HasApiVersion(1.0);
