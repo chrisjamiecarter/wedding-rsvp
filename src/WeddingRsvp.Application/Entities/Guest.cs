@@ -8,6 +8,9 @@ public sealed class Guest
     public required string Name { get; set; }
     public RsvpStatus RsvpStatus { get; set; } = RsvpStatus.Unknown;
 
+    public Guid InviteId { get; set; }
+    public Invite? Invite { get; set; }
+
     public Guid? DessertFoodOptionId { get; set; }
     public FoodOption? DessertFoodOption { get; set; }
 

@@ -18,5 +18,10 @@ internal sealed class InviteConfiguration : IEntityTypeConfiguration<Invite>
 
         builder.Property(p => p.HouseholdName)
                .IsRequired();
+
+        builder.HasMany(i => i.Guests)
+               .WithOne(g => g.Invite)
+               .HasForeignKey(fk => fk.InviteId)
+               .OnDelete(DeleteBehavior.Cascade);
     }
 }
