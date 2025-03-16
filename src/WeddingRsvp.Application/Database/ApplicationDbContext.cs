@@ -13,6 +13,8 @@ internal class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Event> Events { get; set; }
 
+    public DbSet<FoodOption> FoodOptions { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
