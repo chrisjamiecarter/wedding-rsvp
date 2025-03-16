@@ -1,5 +1,7 @@
-﻿using WeddingRsvp.Api.Mappings.V1;
+﻿using Microsoft.AspNetCore.OutputCaching;
+using WeddingRsvp.Api.Mappings.V1;
 using WeddingRsvp.Application.Auth;
+using WeddingRsvp.Application.Cache;
 using WeddingRsvp.Application.Services;
 using WeddingRsvp.Contracts.Requests.V1.Events;
 using WeddingRsvp.Contracts.Responses;
@@ -16,13 +18,14 @@ public static class CreateEventEndpoint
         app.MapPost(Routes.Events.Create,
             async (CreateEventRequest request,
                    IEventService eventService,
+                   IOutputCacheStore outputCacheStore,
                    CancellationToken cancellationToken) =>
             {
                 var evnt = request.ToEntity();
 
                 await eventService.CreateAsync(evnt, cancellationToken);
 
-                // TODO evict cache.
+                await outputCacheStore.EvictByTagAsync(Policies.Event.Tag, cancellationToken);
 
                 var response = evnt.ToResponse();
                 return TypedResults.CreatedAtRoute(response, GetEventEndpoint.Name, new {id = evnt.Id});

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using WeddingRsvp.Application.Auth;
+using WeddingRsvp.Application.Cache;
 using WeddingRsvp.Application.Database;
 using WeddingRsvp.Application.Entities;
 using WeddingRsvp.Application.Options;
@@ -31,8 +32,6 @@ public static class AssemblyInstaller
 
         services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-                //.AddSignInManager()
-                //.AddDefaultTokenProviders();
 
         JwtOptions jwtOptions = configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>() ?? throw new InvalidOperationException("Configuration section 'JwtOptions' not found");
         services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
@@ -62,12 +61,31 @@ public static class AssemblyInstaller
             //googleOptions.AccessDeniedPath = "/Account/AccessDenied";
             googleOptions.CallbackPath = "/signin-google";
         });
-        //.AddIdentityCookies();
 
         services.AddAuthorizationBuilder()
         .AddPolicy(AuthConstants.AdminPolicyName, policy =>
         {
             policy.RequireClaim(AuthConstants.AdminClaimName, "true");
+        });
+
+        services.AddOutputCache(options =>
+        {
+            options.AddBasePolicy(policy =>
+            {
+                policy.Cache();
+            });
+            options.AddPolicy(Policies.Event.Name, policy =>
+            {
+                policy.Cache()
+                      .Expire(Policies.Event.Expiration)
+                      .Tag(Policies.Event.Tag);
+            });
+            options.AddPolicy(Policies.FoodOption.Name, policy =>
+            {
+                policy.Cache()
+                      .Expire(Policies.FoodOption.Expiration)
+                      .Tag(Policies.FoodOption.Tag);
+            });
         });
 
         services.AddScoped<IAuthService, AuthService>();

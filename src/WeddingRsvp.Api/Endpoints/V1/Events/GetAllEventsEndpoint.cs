@@ -1,5 +1,6 @@
 ﻿using WeddingRsvp.Api.Mappings.V1;
 using WeddingRsvp.Application.Auth;
+using WeddingRsvp.Application.Cache;
 using WeddingRsvp.Application.Services;
 using WeddingRsvp.Contracts.Requests.V1.Events;
 using WeddingRsvp.Contracts.Responses.V1.Events;
@@ -29,8 +30,8 @@ public static class GetAllEventsEndpoint
             .Produces(StatusCodes.Status401Unauthorized)
             .RequireAuthorization(AuthConstants.AdminPolicyName)
             .WithApiVersionSet(ApiVersioning.ApiVersionSet!)
-            .HasApiVersion(1.0);
-            //.CacheOutput("EventCache");
+            .HasApiVersion(1.0)
+            .CacheOutput(Policies.Event.Name);
 
         return app;
     }

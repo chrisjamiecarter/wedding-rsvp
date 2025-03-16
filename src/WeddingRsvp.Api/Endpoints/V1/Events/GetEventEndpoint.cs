@@ -1,5 +1,6 @@
 ﻿using WeddingRsvp.Api.Mappings.V1;
 using WeddingRsvp.Application.Auth;
+using WeddingRsvp.Application.Cache;
 using WeddingRsvp.Application.Services;
 using WeddingRsvp.Contracts.Responses.V1.Events;
 
@@ -28,8 +29,8 @@ public static class GetEventEndpoint
             .Produces(StatusCodes.Status404NotFound)
             .RequireAuthorization(AuthConstants.AdminPolicyName)
             .WithApiVersionSet(ApiVersioning.ApiVersionSet!)
-            .HasApiVersion(1.0);
-        //.CacheOutput("EventCache");
+            .HasApiVersion(1.0)
+            .CacheOutput(Policies.Event.Name);
 
         return app;
     }

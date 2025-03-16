@@ -1,4 +1,6 @@
-﻿using WeddingRsvp.Application.Auth;
+﻿using Microsoft.AspNetCore.OutputCaching;
+using WeddingRsvp.Application.Auth;
+using WeddingRsvp.Application.Cache;
 using WeddingRsvp.Application.Services;
 
 namespace WeddingRsvp.Api.Endpoints.V1.Events;
@@ -12,6 +14,7 @@ public static class DeleteEventEndpoint
         app.MapDelete(Routes.Events.Delete,
             async (Guid id,
                    IEventService eventService,
+                   IOutputCacheStore outputCacheStore,
                    CancellationToken cancellationToken) =>
             {
                 var deleted = await eventService.DeleteByIdAsync(id, cancellationToken);
@@ -20,7 +23,7 @@ public static class DeleteEventEndpoint
                     return Results.NotFound();
                 }
 
-                // TODO evict cache.
+                await outputCacheStore.EvictByTagAsync(Policies.Event.Tag, cancellationToken);
 
                 return Results.NoContent();
             })

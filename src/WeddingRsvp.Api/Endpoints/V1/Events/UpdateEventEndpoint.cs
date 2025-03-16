@@ -1,5 +1,7 @@
-﻿using WeddingRsvp.Api.Mappings.V1;
+﻿using Microsoft.AspNetCore.OutputCaching;
+using WeddingRsvp.Api.Mappings.V1;
 using WeddingRsvp.Application.Auth;
+using WeddingRsvp.Application.Cache;
 using WeddingRsvp.Application.Services;
 using WeddingRsvp.Contracts.Requests.V1.Events;
 using WeddingRsvp.Contracts.Responses;
@@ -17,6 +19,7 @@ public static class UpdateEventEndpoint
             async (Guid id,
                    UpdateEventRequest request,
                    IEventService eventService,
+                   IOutputCacheStore outputCacheStore,
                    CancellationToken cancellationToken) =>
             {
                 var evnt = request.ToEntity(id);
@@ -27,7 +30,7 @@ public static class UpdateEventEndpoint
                     return Results.NotFound();
                 }
 
-                // TODO evict cache.
+                await outputCacheStore.EvictByTagAsync(Policies.Event.Tag, cancellationToken);
 
                 var response = updatedEvent.ToResponse();
                 return TypedResults.Ok(response);
