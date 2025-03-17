@@ -11,7 +11,7 @@ internal sealed class EventConfiguration : IEntityTypeConfiguration<Event>
     {
         builder.ToTable(TableConstants.Event, SchemaConstants.Core);
 
-        builder.HasKey(pk =>  pk.Id);
+        builder.HasKey(pk => pk.Id);
 
         builder.Property(p => p.Name)
                .IsRequired();

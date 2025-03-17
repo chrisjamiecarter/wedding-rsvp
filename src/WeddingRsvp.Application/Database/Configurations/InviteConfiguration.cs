@@ -11,7 +11,7 @@ internal sealed class InviteConfiguration : IEntityTypeConfiguration<Invite>
     {
         builder.ToTable(TableConstants.Invite, SchemaConstants.Core);
 
-        builder.HasKey(pk =>  pk.Id);
+        builder.HasKey(pk => pk.Id);
 
         builder.Property(p => p.Email)
                .IsRequired();

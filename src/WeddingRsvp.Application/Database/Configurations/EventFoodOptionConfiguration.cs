@@ -11,6 +11,6 @@ internal sealed class EventFoodOptionConfiguration : IEntityTypeConfiguration<Ev
     {
         builder.ToTable(TableConstants.EventFoodOption, SchemaConstants.Core);
 
-        builder.HasKey(pk =>  pk.Id);
+        builder.HasKey(pk => pk.Id);
     }
 }

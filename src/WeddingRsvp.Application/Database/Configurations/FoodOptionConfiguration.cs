@@ -11,7 +11,7 @@ internal sealed class FoodOptionConfiguration : IEntityTypeConfiguration<FoodOpt
     {
         builder.ToTable(TableConstants.FoodOption, SchemaConstants.Core);
 
-        builder.HasKey(pk =>  pk.Id);
+        builder.HasKey(pk => pk.Id);
 
         builder.Property(p => p.Name)
                .IsRequired();
@@ -22,7 +22,7 @@ internal sealed class FoodOptionConfiguration : IEntityTypeConfiguration<FoodOpt
 
         builder.HasMany(e => e.EventFoodOptions)
                .WithOne(o => o.FoodOption)
-               .HasForeignKey(fk => fk.EventId)
+               .HasForeignKey(fk => fk.FoodOptionId)
                .OnDelete(DeleteBehavior.Cascade);
     }
 }

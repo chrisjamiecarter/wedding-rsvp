@@ -17,4 +17,12 @@ public static class Policies
 
         public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(1);
     }
+
+    public static class EventFoodOption
+    {
+        public const string Name = "EventFoodOptionCache";
+        public const string Tag = "eventfoodoptions";
+
+        public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(1);
+    }
 }
