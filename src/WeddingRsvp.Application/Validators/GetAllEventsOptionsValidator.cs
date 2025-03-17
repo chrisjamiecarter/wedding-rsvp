@@ -3,7 +3,7 @@ using WeddingRsvp.Application.Models;
 
 namespace WeddingRsvp.Application.Validators;
 
-public class GetAllEventsOptionsValidator : AbstractValidator<GetAllEventsOptions>
+public sealed class GetAllEventsOptionsValidator : AbstractValidator<GetAllEventsOptions>
 {
     private static readonly string[] ValidSortFields =
     {

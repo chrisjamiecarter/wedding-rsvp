@@ -28,7 +28,7 @@ public static class CreateEventEndpoint
                 await outputCacheStore.EvictByTagAsync(Policies.Event.Tag, cancellationToken);
 
                 var response = evnt.ToResponse();
-                return TypedResults.CreatedAtRoute(response, GetEventEndpoint.Name, new {id = evnt.Id});
+                return TypedResults.CreatedAtRoute(response, GetEventEndpoint.Name, new { id = evnt.Id });
             })
             .WithName(Name)
             .Produces<EventResponse>(StatusCodes.Status201Created)

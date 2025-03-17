@@ -3,7 +3,7 @@ using WeddingRsvp.Application.Entities;
 
 namespace WeddingRsvp.Application.Validators;
 
-public class EventValidator : AbstractValidator<Event>
+public sealed class EventValidator : AbstractValidator<Event>
 {
     public EventValidator()
     {

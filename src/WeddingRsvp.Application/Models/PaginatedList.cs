@@ -7,13 +7,9 @@
 public sealed class PaginatedList<T>
 {
     public IEnumerable<T> Items { get; set; }
-
     public int PageNumber { get; }
-
     public int PageSize { get; }
-
     public int TotalCount { get; }
-
     public int TotalPages { get; }
 
     private PaginatedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)

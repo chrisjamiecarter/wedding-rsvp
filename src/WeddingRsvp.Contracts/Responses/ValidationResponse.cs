@@ -1,3 +1,4 @@
 ﻿namespace WeddingRsvp.Contracts.Responses;
 
-public sealed record ValidationResponse(string PropertyName, string Message);
+public sealed record ValidationResponse(string PropertyName,
+                                        string Message);

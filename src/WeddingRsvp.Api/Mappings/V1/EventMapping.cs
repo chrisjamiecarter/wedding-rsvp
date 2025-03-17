@@ -39,7 +39,14 @@ public static class EventMapping
 
     public static EventResponse ToResponse(this Event entity)
     {
-        return new EventResponse(entity.Id, entity.Name, entity.Description, entity.Venue, entity.Address, entity.Date, entity.Time, entity.DressCode);
+        return new EventResponse(entity.Id,
+                                 entity.Name,
+                                 entity.Description,
+                                 entity.Venue,
+                                 entity.Address,
+                                 entity.Date,
+                                 entity.Time,
+                                 entity.DressCode);
     }
 
     public static EventsResponse ToResponse(this PaginatedList<Event> entities)
