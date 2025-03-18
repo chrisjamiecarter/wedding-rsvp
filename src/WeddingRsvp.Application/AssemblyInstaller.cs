@@ -93,6 +93,7 @@ public static class AssemblyInstaller
         services.AddScoped<IFoodOptionService, FoodOptionService>();
         services.AddScoped<IEventFoodOptionService, EventFoodOptionService>();
         services.AddScoped<IInviteService, InviteService>();
+        services.AddScoped<IGuestService, GuestService>();
 
         services.Configure<SeederOptions>(configuration.GetSection(nameof(SeederOptions)));
         services.AddScoped<SeederService>();

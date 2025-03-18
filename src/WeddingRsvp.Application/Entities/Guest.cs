@@ -11,9 +11,9 @@ public sealed class Guest
     public Guid InviteId { get; set; }
     public Invite? Invite { get; set; }
 
-    public Guid? DessertFoodOptionId { get; set; }
-    public FoodOption? DessertFoodOption { get; set; }
-
     public Guid? MainFoodOptionId { get; set; }
     public FoodOption? MainFoodOption { get; set; }
+
+    public Guid? DessertFoodOptionId { get; set; }
+    public FoodOption? DessertFoodOption { get; set; }
 }
