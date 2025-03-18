@@ -14,6 +14,7 @@ internal class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Event> Events { get; set; }
     public DbSet<EventFoodOption> EventFoodOptions { get; set; }
     public DbSet<FoodOption> FoodOptions { get; set; }
+    public DbSet<Invite> Invites { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -25,4 +25,12 @@ public static class Policies
 
         public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(1);
     }
+
+    public static class Invite
+    {
+        public const string Name = "InviteCache";
+        public const string Tag = "invites";
+
+        public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(1);
+    }
 }

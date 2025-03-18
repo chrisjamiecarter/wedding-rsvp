@@ -27,6 +27,11 @@ public static class Routes
         public const string CreateFoodOption = FoodOptionsBase;
         public const string DeleteFoodOption = $"{FoodOptionsBase}/{{foodOptionId:guid}}";
         public const string GetAllFoodOptions = FoodOptionsBase;
+
+        private const string InvitesBase = $"{Base}/{{eventId:guid}}/invites";
+
+        public const string CreateInvite = InvitesBase;
+        public const string GetAllInvites = InvitesBase;
     }
 
     public static class EventFoodOptions
@@ -44,6 +49,16 @@ public static class Routes
         public const string Delete = $"{Base}/{{id:guid}}";
         public const string Get = $"{Base}/{{id:guid}}";
         public const string GetAll = Base;
+        public const string Update = $"{Base}/{{id:guid}}";
+    }
+
+    public static class Invites
+    {
+        private const string Base = $"{ApiBase}/invites";
+
+        public const string Delete = $"{Base}/{{id:guid}}";
+        public const string GenerateToken = $"{Base}/{{id:guid}}/GenerateToken";
+        public const string Get = $"{Base}/{{id:guid}}";
         public const string Update = $"{Base}/{{id:guid}}";
     }
 }
