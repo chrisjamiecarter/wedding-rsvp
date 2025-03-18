@@ -74,8 +74,13 @@ internal class EventFoodOptionService : IEventFoodOptionService
         return PaginatedList<EventFoodOption>.Create(items, count, options.PageNumber, options.PageSize);
     }
 
-    public async Task<EventFoodOption?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task<EventFoodOption?> GetByEventIdAndFoodOptionIdAsync(Guid eventId, Guid foodOptionId, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.EventFoodOptions.SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
+        return _dbContext.EventFoodOptions.SingleOrDefaultAsync(p => p.EventId == eventId && p.FoodOptionId == foodOptionId, cancellationToken);
+    }
+
+    public Task<EventFoodOption?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return _dbContext.EventFoodOptions.SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 }

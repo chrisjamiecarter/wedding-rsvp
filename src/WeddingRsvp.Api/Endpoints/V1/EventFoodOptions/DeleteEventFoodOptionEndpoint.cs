@@ -12,12 +12,19 @@ public static class DeleteEventFoodOptionEndpoint
     public static IEndpointRouteBuilder MapDeleteEventFoodOption(this IEndpointRouteBuilder app)
     {
         app.MapDelete(Routes.Events.DeleteFoodOption,
-            async (Guid id,
+            async (Guid eventId,
+                   Guid foodOptionId,
                    IEventFoodOptionService eventFoodOptionService,
                    IOutputCacheStore outputCacheStore,
                    CancellationToken cancellationToken) =>
             {
-                var deleted = await eventFoodOptionService.DeleteByIdAsync(id, cancellationToken);
+                var eventFoodOption = await eventFoodOptionService.GetByEventIdAndFoodOptionIdAsync(eventId, foodOptionId, cancellationToken);
+                if (eventFoodOption is null)
+                {
+                    return Results.NotFound();
+                }
+
+                var deleted = await eventFoodOptionService.DeleteByIdAsync(eventFoodOption.Id, cancellationToken);
                 if (!deleted)
                 {
                     return Results.NotFound();
