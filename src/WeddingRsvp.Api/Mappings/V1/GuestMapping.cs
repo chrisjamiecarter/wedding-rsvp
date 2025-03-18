@@ -21,7 +21,7 @@ public static class GuestMapping
 
     public static Guest ToEntity(this UpdateGuestRequest request, Guest existingEntity)
     {
-        Enum.TryParse<RsvpStatus>(request.RvspStatus, true, out var rsvpStatus);
+        Enum.TryParse<RsvpStatus>(request.RsvpStatus, true, out var rsvpStatus);
 
         return new Guest
         {
