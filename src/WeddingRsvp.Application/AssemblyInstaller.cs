@@ -98,7 +98,7 @@ public static class AssemblyInstaller
         services.Configure<SeederOptions>(configuration.GetSection(nameof(SeederOptions)));
         services.AddScoped<SeederService>();
 
-        services.AddValidatorsFromAssembly(AssemblyReference.Assembly, ServiceLifetime.Singleton);
+        services.AddValidatorsFromAssembly(AssemblyReference.Assembly, ServiceLifetime.Transient);
 
         return services;
     }

@@ -63,6 +63,7 @@ public static class Routes
         public const string Delete = $"{Base}/{{id:guid}}";
         public const string GenerateToken = $"{Base}/{{id:guid}}/GenerateToken";
         public const string Get = $"{Base}/{{id:guid}}";
+        public const string SubmitRsvp = $"{Base}/{{id:guid}}/rsvp";
         public const string Update = $"{Base}/{{id:guid}}";
 
         private const string GuestsBase = $"{Base}/{{inviteId:guid}}/guests";

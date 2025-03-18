@@ -43,4 +43,29 @@ public static class InviteMapping
     {
         return new InvitesResponse(entities.Select(ToResponse));
     }
+
+    public static GuestRsvpResponse ToRsvpResponse(this Guest entity)
+    {
+        return new GuestRsvpResponse(entity.Id,
+                                     entity.Name,
+                                     entity.RsvpStatus.ToString(),
+                                     entity.MainFoodOptionId,
+                                     entity.MainFoodOption?.Name,
+                                     entity.DessertFoodOptionId,
+                                     entity.DessertFoodOption?.Name);
+    }
+
+    public static IEnumerable<GuestRsvpResponse> ToRsvpResponse(this IEnumerable<Guest> entities)
+    {
+        return entities.Select(ToRsvpResponse);
+    }
+
+    public static SubmitRsvpResponse ToRsvpResponse(this Invite entity)
+    {
+        return new SubmitRsvpResponse(entity.Id,
+                                      entity.Email,
+                                      entity.HouseholdName,
+                                      entity.EventId,
+                                      entity.Guests!.ToRsvpResponse());
+    }
 }

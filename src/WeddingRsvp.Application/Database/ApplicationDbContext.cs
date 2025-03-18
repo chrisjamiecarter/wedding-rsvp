@@ -4,7 +4,7 @@ using WeddingRsvp.Application.Entities;
 
 namespace WeddingRsvp.Application.Database;
 
-internal class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {

@@ -9,6 +9,7 @@ public static class InvitesEndpointsExtensions
         app.MapGenerateTokenForInvite();
         app.MapGetAllInvites();
         app.MapGetInvite();
+        app.MapSubmitRsvp();
         app.MapUpdateInvite();
 
         return app;
