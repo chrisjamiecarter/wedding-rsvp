@@ -30,6 +30,7 @@ public static class AssemblyInstaller
             });
         });
 
+        // TODO: Think about IdentityCore.
         services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
