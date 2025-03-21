@@ -5,5 +5,5 @@ public static class AuthConstants
     public const string AdminPolicyName = "Admin";
     public const string AdminClaimName = "Admin";
 
-    public const string UserIdClaimName = "userid";
+    public static bool UserRequireUniqueEmail = true;
 }

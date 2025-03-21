@@ -12,7 +12,7 @@ using WeddingRsvp.Application.Database;
 namespace WeddingRsvp.Application.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250321180210_InitialCreate")]
+    [Migration("20250321195947_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,7 +48,7 @@ namespace WeddingRsvp.Application.Database.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("Role", "auth");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -73,7 +73,7 @@ namespace WeddingRsvp.Application.Database.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("RoleClaim", "auth");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -98,7 +98,7 @@ namespace WeddingRsvp.Application.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("UserClaim", "auth");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -120,7 +120,7 @@ namespace WeddingRsvp.Application.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("UserLogin", "auth");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -135,7 +135,7 @@ namespace WeddingRsvp.Application.Database.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("UserRole", "auth");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -154,7 +154,7 @@ namespace WeddingRsvp.Application.Database.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("UserToken", "auth");
                 });
 
             modelBuilder.Entity("WeddingRsvp.Application.Entities.ApplicationUser", b =>
@@ -218,7 +218,7 @@ namespace WeddingRsvp.Application.Database.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("User", "auth");
                 });
 
             modelBuilder.Entity("WeddingRsvp.Application.Entities.Event", b =>
@@ -357,34 +357,6 @@ namespace WeddingRsvp.Application.Database.Migrations
                     b.ToTable("Invite", "core");
                 });
 
-            modelBuilder.Entity("WeddingRsvp.Application.Entities.RefreshToken", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("ExpiresOnUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("Value")
-                        .IsUnique();
-
-                    b.ToTable("RefreshToken", "auth");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -487,17 +459,6 @@ namespace WeddingRsvp.Application.Database.Migrations
                         .IsRequired();
 
                     b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("WeddingRsvp.Application.Entities.RefreshToken", b =>
-                {
-                    b.HasOne("WeddingRsvp.Application.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WeddingRsvp.Application.Entities.Event", b =>

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using WeddingRsvp.Application.Auth;
 using WeddingRsvp.Application.Cache;
 using WeddingRsvp.Application.Database;
+using WeddingRsvp.Application.Database.Constants;
 using WeddingRsvp.Application.Entities;
 using WeddingRsvp.Application.Options;
 using WeddingRsvp.Application.Services;
@@ -27,6 +28,7 @@ public static class AssemblyInstaller
             options.UseNpgsql(connectionString, npgsqlOptions =>
             {
                 npgsqlOptions.UseAdminDatabase("postgres");
+                npgsqlOptions.MigrationsHistoryTable(TableConstants.EntityFrameworkCoreMigration, SchemaConstants.EntityFrameworkCore);
             });
         });
 
@@ -58,8 +60,8 @@ public static class AssemblyInstaller
                     policy.RequireClaim(AuthConstants.AdminClaimName, "true");
                     policy.AddAuthenticationSchemes(IdentityConstants.ApplicationScheme, IdentityConstants.BearerScheme);
                 });
-
-        services.AddIdentityCore<ApplicationUser>()
+        
+        services.AddIdentityCore<ApplicationUser>(options => options.User.RequireUniqueEmail = AuthConstants.UserRequireUniqueEmail)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddApiEndpoints();
 
