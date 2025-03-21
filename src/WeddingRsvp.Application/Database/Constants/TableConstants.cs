@@ -7,5 +7,4 @@ internal static class TableConstants
     public const string EventFoodOption = "EventFoodOption";
     public const string Invite = "Invite";
     public const string Guest = "Guest";
-    public const string RefreshToken = "RefreshToken";
 }

@@ -1,11 +1,9 @@
 ﻿using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WeddingRsvp.Application.Auth;
-using WeddingRsvp.Application.Database;
 using WeddingRsvp.Application.Entities;
 using WeddingRsvp.Application.Models;
 using WeddingRsvp.Application.Options;

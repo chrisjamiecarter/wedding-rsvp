@@ -17,7 +17,7 @@ internal static class Program
         await app.AddApplicationMiddlewareAsync();
 
         app.AddApiMiddleware();
-                
+
         await app.RunAsync();
     }
 }

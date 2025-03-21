@@ -12,8 +12,8 @@ using WeddingRsvp.Application.Database;
 namespace WeddingRsvp.Application.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250316160014_MissingForeignKey")]
-    partial class MissingForeignKey
+    [Migration("20250321180210_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -274,6 +274,8 @@ namespace WeddingRsvp.Application.Database.Migrations
 
                     b.HasIndex("EventId");
 
+                    b.HasIndex("FoodOptionId");
+
                     b.ToTable("EventFoodOption", "core");
                 });
 
@@ -355,6 +357,34 @@ namespace WeddingRsvp.Application.Database.Migrations
                     b.ToTable("Invite", "core");
                 });
 
+            modelBuilder.Entity("WeddingRsvp.Application.Entities.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ExpiresOnUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("Value")
+                        .IsUnique();
+
+                    b.ToTable("RefreshToken", "auth");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -416,7 +446,7 @@ namespace WeddingRsvp.Application.Database.Migrations
 
                     b.HasOne("WeddingRsvp.Application.Entities.FoodOption", "FoodOption")
                         .WithMany("EventFoodOptions")
-                        .HasForeignKey("EventId")
+                        .HasForeignKey("FoodOptionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -457,6 +487,17 @@ namespace WeddingRsvp.Application.Database.Migrations
                         .IsRequired();
 
                     b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("WeddingRsvp.Application.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("WeddingRsvp.Application.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WeddingRsvp.Application.Entities.Event", b =>

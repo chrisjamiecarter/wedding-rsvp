@@ -1,12 +1,12 @@
-﻿using System.Text;
-using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using WeddingRsvp.Application.Auth;
 using WeddingRsvp.Application.Cache;
 using WeddingRsvp.Application.Database;
@@ -30,44 +30,38 @@ public static class AssemblyInstaller
             });
         });
 
-        // TODO: Think about IdentityCore.
-        services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
-        JwtOptions jwtOptions = configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>() ?? throw new InvalidOperationException("Configuration section 'JwtOptions' not found");
-        services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
-
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Secret)),
-                ValidAudience = jwtOptions.Audience,
-                ValidateAudience = true,
-                ValidIssuer = jwtOptions.Issuer,
-                ValidateIssuer = true,
-                ValidateLifetime = true,
-            };
-        })
-        .AddGoogle(googleOptions =>
-        {
-            googleOptions.ClientId = configuration["Authentication:Google:ClientId"] ?? throw new InvalidOperationException("Configuration setting 'Authentication:Google:ClientId' not found");
-            googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"] ?? throw new InvalidOperationException("Configuration setting 'Authentication:Google:ClientSecret' not found");
-            //googleOptions.AccessDeniedPath = "/Account/AccessDenied";
-            googleOptions.CallbackPath = "/signin-google";
-        });
+        services.AddAuthentication(IdentityConstants.ApplicationScheme)
+                .AddBearerToken(IdentityConstants.BearerScheme)
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = configuration["Authentication:Google:ClientId"] ?? throw new InvalidOperationException("Configuration setting 'Authentication:Google:ClientId' not found");
+                    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"] ?? throw new InvalidOperationException("Configuration setting 'Authentication:Google:ClientSecret' not found");
+                    googleOptions.AccessDeniedPath = "/Account/AccessDenied";
+                    googleOptions.CallbackPath = "/signin-google";
+                })
+                .AddIdentityCookies()
+                .ApplicationCookie!.Configure(options =>
+                {
+                    options.Events = new CookieAuthenticationEvents
+                    {
+                        OnRedirectToLogin = context =>
+                        {
+                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
 
         services.AddAuthorizationBuilder()
-        .AddPolicy(AuthConstants.AdminPolicyName, policy =>
-        {
-            policy.RequireClaim(AuthConstants.AdminClaimName, "true");
-        });
+                .AddPolicy(AuthConstants.AdminPolicyName, policy =>
+                {
+                    policy.RequireClaim(AuthConstants.AdminClaimName, "true");
+                    policy.AddAuthenticationSchemes(IdentityConstants.ApplicationScheme, IdentityConstants.BearerScheme);
+                });
+
+        services.AddIdentityCore<ApplicationUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddApiEndpoints();
 
         services.AddOutputCache(options =>
         {
@@ -89,7 +83,6 @@ public static class AssemblyInstaller
             });
         });
 
-        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IEventService, EventService>();
         services.AddScoped<IFoodOptionService, FoodOptionService>();
         services.AddScoped<IEventFoodOptionService, EventFoodOptionService>();
@@ -106,6 +99,9 @@ public static class AssemblyInstaller
 
     public static async Task<WebApplication> AddApplicationMiddlewareAsync(this WebApplication app)
     {
+        app.MapGroup("api/auth")
+           .MapIdentityApi<ApplicationUser>();
+
         using var scope = app.Services.CreateScope();
         var services = scope.ServiceProvider;
         await services.SeedDatabaseAsync();

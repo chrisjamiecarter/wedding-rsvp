@@ -52,9 +52,6 @@ public static class AssemblyInstaller
 
         app.UseHttpsRedirection();
 
-        app.UseAuthentication();
-        app.UseAuthorization();
-
         app.UseMiddleware<ValidationMappingMiddleware>();
 
         app.MapApiV1Endpoints();
