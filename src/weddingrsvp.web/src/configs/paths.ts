@@ -3,4 +3,13 @@ export const paths = {
     path: "/",
     getHref: () => "/",
   },
+  auth: {
+    signin: {
+      path: "/auth/signin",
+      getHref: (redirectTo?: string | null | undefined) =>
+        `/auth/signin${
+          redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""
+        }`,
+    },
+  },
 } as const;
