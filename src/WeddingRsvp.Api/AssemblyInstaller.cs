@@ -5,6 +5,7 @@ using WeddingRsvp.Api.Endpoints;
 using WeddingRsvp.Api.Endpoints.V1;
 using WeddingRsvp.Api.Middlewares;
 using WeddingRsvp.Api.OpenApi;
+using WeddingRsvp.Application.Cors;
 
 namespace WeddingRsvp.Api;
 
@@ -12,6 +13,17 @@ public static class AssemblyInstaller
 {
     public static IServiceCollection AddApiServices(this IServiceCollection services)
     {
+        services.AddCors(options =>
+        {
+            options.AddPolicy(Policies.Web.Name, policy =>
+            {
+                policy.WithOrigins(Policies.Web.Origins)
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials();
+            });
+        });
+
         services.AddApiVersioning(options =>
         {
             options.DefaultApiVersion = new ApiVersion(1.0);
@@ -49,6 +61,8 @@ public static class AssemblyInstaller
                 }
             });
         }
+
+        app.UseCors(Policies.Web.Name);
 
         app.UseHttpsRedirection();
 
