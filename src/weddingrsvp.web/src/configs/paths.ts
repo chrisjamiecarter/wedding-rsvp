@@ -12,4 +12,10 @@ export const paths = {
         }`,
     },
   },
+  app: {
+    dashboard: {
+      path: "/app",
+      getHref: () => "/app",
+    },
+  },
 } as const;
