@@ -85,6 +85,7 @@ public static class AssemblyInstaller
             });
         });
 
+        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IEventService, EventService>();
         services.AddScoped<IFoodOptionService, FoodOptionService>();
         services.AddScoped<IEventFoodOptionService, EventFoodOptionService>();
