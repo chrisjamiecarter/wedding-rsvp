@@ -1,5 +1,4 @@
 import { GoogleButton } from "@/components/ui/google-button";
-import { signinWithEmailAndPassword } from "@/lib/auth";
 import {
   Button,
   Checkbox,
@@ -9,8 +8,11 @@ import {
   TextInput,
 } from "@mantine/core";
 import { isEmail, useForm } from "@mantine/form";
+import { useAuth } from "@/lib/auth";
 
 const SigninForm = () => {
+  const { signin } = useAuth();
+
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -24,10 +26,7 @@ const SigninForm = () => {
 
   const handleLogin = async (values: { email: string; password: string }) => {
     try {
-      const response = await signinWithEmailAndPassword({
-        email: values.email,
-        password: values.password,
-      });
+      const response = await signin(values.email, values.password);
       console.log("handleLogin response", response);
     } catch (error) {
       console.error("handleLogin error:", error);
