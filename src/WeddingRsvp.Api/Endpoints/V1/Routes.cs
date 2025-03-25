@@ -9,6 +9,7 @@ public static class Routes
         private const string Base = $"{ApiBase}/auth";
 
         public const string Logout = $"{Base}/logout";
+        public const string Me = $"{Base}/me";
     }
 
     public static class Events

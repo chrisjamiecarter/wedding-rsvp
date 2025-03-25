@@ -6,6 +6,7 @@ public static class AuthEndpointsExtensions
     {
         // Identity doesnt map a logout endpoint.
         app.MapLogout();
+        app.MapMe();
 
         return app;
     }
