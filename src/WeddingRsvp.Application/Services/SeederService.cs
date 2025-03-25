@@ -25,14 +25,21 @@ internal sealed class SeederService
 
     public async Task SeedDatabaseAsync()
     {
-        if (!_options.SeedDatabase)
+        try
         {
-            return;
-        }
+            if (!_options.SeedDatabase)
+            {
+                return;
+            }
 
-        if (_options.SeedUser != null)
+            if (_options.SeedUser != null)
+            {
+                await SeedUserAsync(_options.SeedUser);
+            }
+        }
+        catch (Exception exception)
         {
-            await SeedUserAsync(_options.SeedUser);
+            _logger.LogError("Error seeding database: {exception}", exception);
         }
     }
 
