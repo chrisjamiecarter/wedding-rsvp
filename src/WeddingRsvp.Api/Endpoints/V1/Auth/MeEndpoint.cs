@@ -1,4 +1,6 @@
 ﻿using System.Security.Claims;
+using WeddingRsvp.Api.Mappings.V1;
+using WeddingRsvp.Application.Services;
 using WeddingRsvp.Contracts.Responses.V1.Auth;
 
 namespace WeddingRsvp.Api.Endpoints.V1.Auth;
@@ -10,20 +12,18 @@ public static partial class MeEndpoint
     public static IEndpointRouteBuilder MapMe(this IEndpointRouteBuilder app)
     {
         app.MapGet(Routes.Auth.Me,
-            async (ClaimsPrincipal user) =>
+            async (ClaimsPrincipal user,
+                   IAuthService authService) =>
             {
                 var id = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
-                var email = user.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
-                var isAdmin = bool.Parse(user.FindFirstValue("Admin") ?? "false");
-                
-                var response = new MeResponse(id, email, isAdmin);
 
-                return await Task.FromResult(Results.Ok(response));
+                var applicationUser = await authService.GetByIdAsync(id);
+                var isAdmin = await authService.IsAdminAsync(applicationUser);
+
+                return TypedResults.Ok(applicationUser.ToResponse(isAdmin));
             })
             .WithName(Name)
             .Produces<MeResponse>(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status401Unauthorized)
-            .RequireAuthorization()
             .WithApiVersionSet(ApiVersioning.ApiVersionSet!)
             .HasApiVersion(1.0);
 
