@@ -5,6 +5,6 @@ public static class Policies
     public static class Web
     {
         public const string Name = "WebCors";
-        public const string Origins = "http://localhost:58001";
+        public const string Origins = "https://localhost:62725";
     }
 }

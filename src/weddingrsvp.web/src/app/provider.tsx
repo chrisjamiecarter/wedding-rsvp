@@ -1,21 +1,31 @@
 import * as React from "react";
+import { ErrorBoundary } from "react-error-boundary";
+
+import { MainErrorFallback } from "@/components/errors/main";
+import { AuthProvider } from "@/lib/auth";
 
 import "@mantine/core/styles.css";
-import { MantineProvider } from "@mantine/core";
-import { AuthProvider } from "@/lib/auth";
+import { Center, MantineProvider } from "@mantine/core";
+import { Loader } from "@/components/ui/loader";
 
 type AppProviderProps = {
   children: React.ReactNode;
 };
 
-export function AppProvider({ children }: AppProviderProps) {
+export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <MantineProvider>
-      <React.Suspense fallback={<div>Loading...</div>}>
-      <AuthProvider>
-        {children}
-      </AuthProvider>
+      <React.Suspense
+        fallback={
+          <Center>
+            <Loader size="xl" />
+          </Center>
+        }>
+        <ErrorBoundary FallbackComponent={MainErrorFallback}>
+          {/* <AuthLoader renderLoading={() => (<Center><Loader size="xl" /></Center>)}></AuthLoader> */}
+          <AuthProvider>{children}</AuthProvider>
+        </ErrorBoundary>
       </React.Suspense>
     </MantineProvider>
   );
-}
+};

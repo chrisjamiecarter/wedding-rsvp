@@ -8,10 +8,37 @@ import {
   TextInput,
 } from "@mantine/core";
 import { isEmail, useForm } from "@mantine/form";
-import { useAuth } from "@/lib/auth";
+import { SigninCredentials, useAuth } from "@/lib/auth";
 
-const SigninForm = () => {
+interface SigninFormProps {
+  onSuccess: () => void;
+}
+
+// const signin = (email: string, password: string) => {
+//   console.log("Starting signin");
+//   const response = api.post("auth/login?useCookies=true", {
+//     email,
+//     password,
+//   });
+//   console.log("signin - response", response);
+//   return response;
+// };
+
+const SigninForm = ({ onSuccess }: SigninFormProps) => {
   const { signin } = useAuth();
+
+  const handleSignin = async (values: { email: string; password: string }) => {
+    try {
+      const credentials: SigninCredentials = {
+        email: values.email,
+        password: values.password,
+      };
+      await signin(credentials);
+      onSuccess();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const form = useForm({
     mode: "uncontrolled",
@@ -24,21 +51,12 @@ const SigninForm = () => {
     },
   });
 
-  const handleLogin = async (values: { email: string; password: string }) => {
-    try {
-      const response = await signin(values.email, values.password);
-      console.log("handleLogin response", response);
-    } catch (error) {
-      console.error("handleLogin error:", error);
-    }
-  };
-
   return (
     <Paper withBorder shadow="md" p={30} mt={20} radius="md">
       <GoogleButton fullWidth>Sign in with Google</GoogleButton>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
-      <form onSubmit={form.onSubmit((values) => handleLogin(values))}>
+      <form onSubmit={form.onSubmit((values) => handleSignin(values))}>
         <TextInput
           label="Email"
           placeholder="example@email.com"
@@ -56,6 +74,7 @@ const SigninForm = () => {
           mt="md"
         />
         <Checkbox label="Remember me" mt="lg" />
+        {/* <Button type="submit" fullWidth mt="xl" loading={signin.isPending}> */}
         <Button type="submit" fullWidth mt="xl">
           Sign in
         </Button>

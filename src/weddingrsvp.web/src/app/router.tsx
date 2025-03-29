@@ -1,31 +1,57 @@
-import { createBrowserRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
+import { useMemo } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router";
 
 import { paths } from "@/configs/paths";
-import LandingRoute from "./routes/landing";
-import NotFound from "./routes/not-found";
-import SigninRoute from "./routes/auth/signin";
-import DashboardRoute from "./routes/app/dashboard";
+import { ProtectedRoute } from "@/lib/auth";
+import {
+  default as AppRoot,
+  ErrorBoundary as AppRootErrorBoundary,
+} from "./routes/app/root";
 
-export const AppRouter = () => {
-  const router = createBrowserRouter([
+const convert = (m: any) => {
+  const { clientLoader, clientAction, default: Component, ...rest } = m;
+  return {
+    ...rest,
+    loader: clientLoader?.(),
+    action: clientAction?.(),
+    Component,
+  };
+};
+
+export const createAppRouter = () => {
+  return createBrowserRouter([
     {
       path: paths.home.path,
-      element: <LandingRoute />,
+      lazy: () => import("./routes/landing").then(convert),
     },
     {
       path: paths.auth.signin.path,
-      element: <SigninRoute />,
+      lazy: () => import("./routes/auth/signin").then(convert),
     },
     {
-      path: paths.app.dashboard.path,
-      element: <DashboardRoute />,
+      path: paths.app.root.path,
+      element: (
+        <ProtectedRoute>
+          <AppRoot />
+        </ProtectedRoute>
+      ),
+      ErrorBoundary: AppRootErrorBoundary,
+      children: [
+        {
+          path: paths.app.dashboard.path,
+          lazy: () => import("./routes/app/dashboard").then(convert),
+        },
+      ],
     },
     {
       path: "*",
-      element: <NotFound />,
+      lazy: () => import("./routes/not-found").then(convert),
     },
   ]);
+};
+
+export const AppRouter = () => {
+  const router = useMemo(() => createAppRouter(), []);
 
   return <RouterProvider router={router} />;
 };

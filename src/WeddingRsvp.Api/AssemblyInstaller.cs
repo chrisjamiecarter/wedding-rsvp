@@ -64,6 +64,9 @@ public static class AssemblyInstaller
 
         app.UseCors(Policies.Web.Name);
 
+        app.UseAuthentication();
+        app.UseAuthorization();
+
         app.UseHttpsRedirection();
 
         app.UseMiddleware<ValidationMappingMiddleware>();

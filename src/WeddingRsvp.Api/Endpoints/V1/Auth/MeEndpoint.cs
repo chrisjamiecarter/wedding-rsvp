@@ -12,8 +12,11 @@ public static partial class MeEndpoint
         app.MapGet(Routes.Auth.Me,
             async (ClaimsPrincipal user) =>
             {
-                var claims = user.Claims.Select(claim => new ClaimsResponse(claim.Type, claim.Value));
-                var response = new MeResponse(claims);
+                var id = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+                var email = user.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
+                var isAdmin = bool.Parse(user.FindFirstValue("Admin") ?? "false");
+                
+                var response = new MeResponse(id, email, isAdmin);
 
                 return await Task.FromResult(Results.Ok(response));
             })

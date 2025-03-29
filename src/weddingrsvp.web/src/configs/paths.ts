@@ -13,8 +13,12 @@ export const paths = {
     },
   },
   app: {
-    dashboard: {
+    root: {
       path: "/app",
+      getHref: () => "/app",
+    },
+    dashboard: {
+      path: "",
       getHref: () => "/app",
     },
   },
