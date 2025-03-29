@@ -45,16 +45,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     checkAuthStatus();
-    // console.log("Checking if user is logged in on mount");
-    // // Check if user is logged in on mount.
-    // api
-    //   .get<User>("/auth/me")
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     setUser(response.data);
-    //   })
-    //   .catch(() => setUser(null))
-    //   .finally(() => setIsLoading(false));
   }, []);
 
   const checkAuthStatus = async () => {
@@ -62,7 +52,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       setIsLoading(true);
       const response = await api.get("/api/auth/me");
-      setUser(response);
+      console.log("checkAuthStatus response", response);
+      setUser(response.user);
     } catch (error) {
       console.error("checkAuthStatus failed: ", error);
       setUser(null);
@@ -79,7 +70,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoading(true);
       await api.post("/api/auth/login?useSessionCookies=true", credentials);
       const response = await api.get("/api/auth/me");
-      setUser(response);
+      console.log("checkAuthStatus response", response);
+      setUser(response.user);
       return { success: true };
     } catch (error) {
       console.error("signin failed: ", error);
