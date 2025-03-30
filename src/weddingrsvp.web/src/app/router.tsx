@@ -41,6 +41,38 @@ export const createAppRouter = () => {
           path: paths.app.dashboard.path,
           lazy: () => import("./routes/app/dashboard").then(convert),
         },
+        {
+          path: paths.app.events.path,
+          lazy: () => import("./routes/app/events/events").then(convert),
+        },
+        {
+          path: paths.app.event.path,
+          lazy: () => import("./routes/app/events/event").then(convert),
+        },
+        {
+          path: paths.app.invites.path,
+          lazy: () => import("./routes/app/invites/invites").then(convert),
+        },
+        {
+          path: paths.app.invite.path,
+          lazy: () => import("./routes/app/invites/invite").then(convert),
+        },
+        {
+          path: paths.app.guests.path,
+          lazy: () => import("./routes/app/guests/guests").then(convert),
+        },
+        {
+          path: paths.app.guest.path,
+          lazy: () => import("./routes/app/guests/guest").then(convert),
+        },
+        {
+          path: paths.app.foods.path,
+          lazy: () => import("./routes/app/foods/foods").then(convert),
+        },
+        {
+          path: paths.app.food.path,
+          lazy: () => import("./routes/app/foods/food").then(convert),
+        },
       ],
     },
     {
