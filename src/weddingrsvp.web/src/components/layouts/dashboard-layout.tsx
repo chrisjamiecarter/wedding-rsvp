@@ -1,46 +1,26 @@
 import { useNavigate } from "react-router";
-import {
-  AppShell,
-  Burger,
-  Button,
-  Group,
-  Image,
-  NavLink,
-  Text,
-} from "@mantine/core";
+import { AppShell, Burger, Button, Group, NavLink } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
-  IconAdjustments,
-  IconCalendarStats,
-  IconFileAnalytics,
-  IconGauge,
-  IconLock,
-  IconNotes,
-  IconPresentationAnalytics,
+  IconCalendarEvent,
+  IconHome,
+  IconTicket,
+  IconToolsKitchen,
+  IconUser,
 } from "@tabler/icons-react";
 
 import { paths } from "@/configs/paths";
 
-import logo from "@/assets/logo.svg";
-import { Link } from "@/components/ui/link";
 import { useAuth } from "@/lib/auth";
-
-const Logo = () => {
-  return (
-    <Link to={paths.home.getHref()}>
-      <Group>
-        <Image h="3rem" w="auto" radius="lg" src={logo} />
-        <Text>Wedding RSVP</Text>
-      </Group>
-    </Link>
-  );
-};
+import { Brand } from "../ui/brand";
+import { Navbar } from "../ui/navbar";
 
 const navData = [
-  { link: "", label: "Events", icon: IconGauge },
-  { link: "", label: "Invites", icon: IconGauge },
-  { link: "", label: "Guests", icon: IconGauge },
-  { link: "", label: "Food Options", icon: IconGauge },
+  { link: paths.app.dashboard.getHref(), label: "Dashboard", icon: IconHome },
+  { link: "", label: "Events", icon: IconCalendarEvent },
+  { link: "", label: "Invites", icon: IconTicket },
+  { link: "", label: "Guests", icon: IconUser },
+  { link: "", label: "Food Options", icon: IconToolsKitchen },
 ];
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
@@ -56,13 +36,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
-  const navLinks = navData.map((item) => (
-    <a href={item.link} key={item.label} onClick={() => navigate(item.link)}>
-      <item.icon />
-      {item.label}
-    </a>
-  ));
-
   return (
     <AppShell
       header={{ height: 60 }}
@@ -73,26 +46,25 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       }}
       padding="md">
       <AppShell.Header>
-        <Group h="100%" px="md" justify="space-between">
-          <Group>
-            <Burger
-              opened={mobileOpened}
-              onClick={toggleMobile}
-              hiddenFrom="sm"
-              size="sm"
-            />
-            <Burger
-              opened={desktopOpened}
-              onClick={toggleDesktop}
-              visibleFrom="sm"
-              size="sm"
-            />
-            <Logo />
-          </Group>
-          <Button onClick={handleSignout}>Sign Out</Button>
+        <Group h="100%" px="md" gap="xl">
+          <Burger
+            opened={mobileOpened}
+            onClick={toggleMobile}
+            hiddenFrom="sm"
+            size="sm"
+          />
+          <Burger
+            opened={desktopOpened}
+            onClick={toggleDesktop}
+            visibleFrom="sm"
+            size="sm"
+          />
+          <NavLink component={Brand} />
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p="md">{navLinks}</AppShell.Navbar>
+      <AppShell.Navbar p="md">
+        <Navbar navbarData={navData} signoutFn={handleSignout} />
+      </AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );

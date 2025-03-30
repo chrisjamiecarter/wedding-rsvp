@@ -8,7 +8,7 @@ const DashboardRoute = () => {
       <h1>
         Hello <b>{auth.user ? auth.user?.email : null}</b>
       </h1>
-      <p>This should only be accessible after login</p>
+      <p>This page should only be accessible after login</p>
     </section>
   );
 };
