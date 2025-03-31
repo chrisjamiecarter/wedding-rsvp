@@ -1,29 +1,32 @@
 import * as React from "react";
 import { ErrorBoundary } from "react-error-boundary";
-
-import { MainErrorFallback } from "@/components/errors/main";
-import { AuthProvider } from "@/lib/auth";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "@mantine/core/styles.css";
-import { Center, MantineProvider } from "@mantine/core";
-import { Loader } from "@/components/ui/loader";
+import { MantineProvider } from "@mantine/core";
+
+import { AuthProvider } from "@/lib/auth";
+import { queryConfig } from "@/lib/react-query";
+import { MainErrorFallback } from "@/components/errors/main";
+import { LoadingPage } from "@/components/ui/loading-page";
 
 type AppProviderProps = {
   children: React.ReactNode;
 };
 
 export const AppProvider = ({ children }: AppProviderProps) => {
+  const [queryClient] = React.useState<QueryClient>(
+    () => new QueryClient({ defaultOptions: queryConfig })
+  );
+
   return (
     <MantineProvider>
-      <React.Suspense
-        fallback={
-          <Center>
-            <Loader size="xl" />
-          </Center>
-        }>
+      <React.Suspense fallback={<LoadingPage />}>
         <ErrorBoundary FallbackComponent={MainErrorFallback}>
-          {/* <AuthLoader renderLoading={() => (<Center><Loader size="xl" /></Center>)}></AuthLoader> */}
-          <AuthProvider>{children}</AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            {/* <AuthLoader renderLoading={() => (<LoadingPage />)}></AuthLoader> */}
+            <AuthProvider>{children}</AuthProvider>
+          </QueryClientProvider>
         </ErrorBoundary>
       </React.Suspense>
     </MantineProvider>
