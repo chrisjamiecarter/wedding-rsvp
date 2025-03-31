@@ -1,9 +1,13 @@
+import { ContentLayout } from "@/components/layouts/content-layout";
+import { EventsList } from "@/features/events/components/events-list";
+import { useQueryClient } from "@tanstack/react-query";
+
 const EventsRoute = () => {
+  const queryClient = useQueryClient();
   return (
-    <>
-      <h1>Events</h1>
-      <p>Hello world!</p>
-    </>
+    <ContentLayout title="Events">
+      <EventsList />
+    </ContentLayout>
   );
 };
 export default EventsRoute;
