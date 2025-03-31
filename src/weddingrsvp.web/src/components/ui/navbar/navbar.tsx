@@ -5,7 +5,7 @@ import { NavbarLink, NavbarLinkProps } from "../navbar-link/navbar-link";
 
 export interface NavbarProps {
   navbarData: NavbarLinkProps[];
-  signoutFn: () => Promise<void>;
+  signoutFn: () => void;
 }
 
 export function Navbar(props: NavbarProps) {

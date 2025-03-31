@@ -1,12 +1,12 @@
-import { useAuth } from "@/lib/auth";
+import { useUser } from "@/lib/auth";
 
 const DashboardRoute = () => {
-  const auth = useAuth();
+  const user = useUser();
 
   return (
     <section>
       <h1>
-        Hello <b>{auth.user ? auth.user?.email : null}</b>
+        Hello <b>{user.data ? user.data.email : null}</b>
       </h1>
       <p>This page should only be accessible after login</p>
     </section>

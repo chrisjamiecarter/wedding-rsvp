@@ -2,19 +2,20 @@ import { useNavigate } from "react-router";
 
 import { paths } from "@/configs/paths";
 import { Button } from "@mantine/core";
-import { useAuth } from "@/lib/auth";
+import { useUser } from "@/lib/auth";
 
 const LandingRoute = () => {
   const navigate = useNavigate();
-  const auth = useAuth();
+  const user = useUser();
 
   const handleStart = () => {
-    if (auth.user) {
+    if (user.data) {
       navigate(paths.app.dashboard.getHref());
     } else {
       navigate(paths.auth.signin.getHref());
     }
   };
+
   return (
     <>
       <h1>Hello from LandingRoute</h1>;

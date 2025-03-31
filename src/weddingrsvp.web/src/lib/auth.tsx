@@ -1,119 +1,80 @@
-import { User } from "@/types/api";
-import { createContext, useContext, useEffect, useState } from "react";
-import { api } from "./api-client";
+import { configureAuth } from "react-query-auth";
 import { Navigate, useLocation } from "react-router";
+import { z } from "zod";
+
 import { paths } from "@/configs/paths";
+import { User } from "@/types/api";
 
-export interface SigninCredentials {
-  email: string;
-  password: string;
-}
+import { api } from "./api-client";
 
-export interface SigninResult {
-  success: boolean;
-  message?: string;
-}
+// api call definitions for auth (types, schemas, requests):
+// these are not part of features as this is a module shared across features
 
-interface AuthContextType {
-  user: User | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  checkAuthStatus: () => Promise<void>;
-  signin: (credentials: SigninCredentials) => Promise<SigninResult>;
-  signout: () => Promise<void>;
-}
+export const signinInputSchema = z.object({
+  email: z.string().min(1, "Required").email("Invalid email"),
+  password: z.string().min(6, "Required"),
+  rememberMe: z.boolean().default(false),
+});
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export type SigninInput = z.infer<typeof signinInputSchema>;
 
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
+const getUser = async (): Promise<User> => {
+  const response = (await api.get("/api/auth/me")) as { user: User };
+  return response.user;
 };
 
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
-
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  console.log("AuthProvider started");
-
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  const checkAuthStatus = async () => {
-    console.log("checkAuthStatus started");
-    try {
-      setIsLoading(true);
-      const response = await api.get("/api/auth/me");
-      console.log("checkAuthStatus response", response);
-      setUser(response.user);
-    } catch (error) {
-      console.error("checkAuthStatus failed: ", error);
-      setUser(null);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const signin = async (
-    credentials: SigninCredentials
-  ): Promise<SigninResult> => {
-    console.log("signin started");
-    try {
-      setIsLoading(true);
-      await api.post("/api/auth/login?useSessionCookies=true", credentials);
-      const response = await api.get("/api/auth/me");
-      console.log("checkAuthStatus response", response);
-      setUser(response.user);
-      return { success: true };
-    } catch (error) {
-      console.error("signin failed: ", error);
-      setUser(null);
-      return { success: false, message: "Signin failed" };
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const signout = async () => {
-    console.log("signout started");
-    try {
-      await api.post("/api/auth/logout", {});
-      setUser(null);
-    } catch (error) {
-      console.error("signout failed: ", error);
-    }
-  };
-
-  const value: AuthContextType = {
-    user,
-    isAuthenticated: !!user,
-    isLoading,
-    checkAuthStatus,
-    signin,
-    signout,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+const signin = (data: SigninInput): Promise<void> => {
+  const url = `/api/auth/login?use${
+    data.rememberMe ? "" : "Session"
+  }Cookies=true`;
+  return api.post(url, data);
 };
+
+const signout = (): Promise<void> => {
+  return api.post("/api/auth/logout", {});
+};
+
+export const registerInputSchema = z.object({
+  email: z.string().min(1, "Required"),
+  password: z.string().min(6, "Required"),
+});
+
+export type RegisterInput = z.infer<typeof registerInputSchema>;
+
+const register = (data: RegisterInput): Promise<void> => {
+  return api.post("/api/auth/register", data);
+};
+
+const authConfig = {
+  userFn: async () => {
+    const response = await getUser();
+    return response;
+  },
+  loginFn: async (data: SigninInput) => {
+    await signin(data);
+    const response = await getUser();
+    return response;
+  },
+  registerFn: async (data: RegisterInput) => {
+    await register(data);
+    const response = await getUser();
+    return response;
+  },
+  logoutFn: signout,
+};
+
+export const { useUser, useLogin, useLogout, useRegister, AuthLoader } =
+  configureAuth(authConfig);
 
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  console.log("ProtectedRoute Started");
-  const { user, isLoading } = useAuth();
+  const user = useUser();
   const location = useLocation();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!user)
+  if (!user.data) {
     return (
       <Navigate to={paths.auth.signin.getHref(location.pathname)} replace />
     );
+  }
 
   return children;
 };

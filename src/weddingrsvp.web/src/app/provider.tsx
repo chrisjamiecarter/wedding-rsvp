@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 
-import { AuthProvider } from "@/lib/auth";
+import { AuthLoader } from "@/lib/auth";
 import { queryConfig } from "@/lib/react-query";
 import { MainErrorFallback } from "@/components/errors/main";
 import { LoadingPage } from "@/components/ui/loading-page";
@@ -24,8 +24,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       <React.Suspense fallback={<LoadingPage />}>
         <ErrorBoundary FallbackComponent={MainErrorFallback}>
           <QueryClientProvider client={queryClient}>
-            {/* <AuthLoader renderLoading={() => (<LoadingPage />)}></AuthLoader> */}
-            <AuthProvider>{children}</AuthProvider>
+            <AuthLoader renderLoading={() => <LoadingPage />}>
+              {children}
+            </AuthLoader>
           </QueryClientProvider>
         </ErrorBoundary>
       </React.Suspense>

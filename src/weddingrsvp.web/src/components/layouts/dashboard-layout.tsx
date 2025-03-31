@@ -5,7 +5,7 @@ import { Calendar, House, Mail, Utensils, Ticket } from "lucide-react";
 
 import { paths } from "@/configs/paths";
 
-import { useAuth } from "@/lib/auth";
+import { useLogout } from "@/lib/auth";
 import { Brand } from "../ui/brand";
 import { Navbar } from "../ui/navbar";
 
@@ -30,13 +30,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
-  const { signout } = useAuth();
-
-  const handleSignout = async () => {
-    await signout().finally(() =>
-      navigate(paths.auth.signin.getHref(location.pathname))
-    );
-  };
+  const signout = useLogout({
+    onSuccess: () => navigate(paths.auth.signin.getHref(location.pathname)),
+  });
 
   return (
     <AppShell
@@ -65,7 +61,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        <Navbar navbarData={navData} signoutFn={handleSignout} />
+        <Navbar navbarData={navData} signoutFn={() => signout.mutate({})} />
       </AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>

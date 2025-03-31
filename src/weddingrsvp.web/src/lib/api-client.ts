@@ -11,7 +11,6 @@ function authRequestInterceptor(config: InternalAxiosRequestConfig) {
 }
 
 export const api = Axios.create({
-  //baseURL: "https://localhost:7156/api",
   baseURL: "/api", // This works with Vite proxy.
 });
 

@@ -8,43 +8,23 @@ import {
   TextInput,
 } from "@mantine/core";
 import { isEmail, useForm } from "@mantine/form";
-import { SigninCredentials, useAuth } from "@/lib/auth";
+import { useLogin } from "@/lib/auth";
 
 interface SigninFormProps {
   onSuccess: () => void;
 }
 
-// const signin = (email: string, password: string) => {
-//   console.log("Starting signin");
-//   const response = api.post("auth/login?useCookies=true", {
-//     email,
-//     password,
-//   });
-//   console.log("signin - response", response);
-//   return response;
-// };
-
 const SigninForm = ({ onSuccess }: SigninFormProps) => {
-  const { signin } = useAuth();
-
-  const handleSignin = async (values: { email: string; password: string }) => {
-    try {
-      const credentials: SigninCredentials = {
-        email: values.email,
-        password: values.password,
-      };
-      await signin(credentials);
-      onSuccess();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const signin = useLogin({
+    onSuccess,
+  });
 
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
       email: "",
       password: "",
+      rememberMe: false,
     },
     validate: {
       email: isEmail("Invalid email"),
@@ -56,7 +36,7 @@ const SigninForm = ({ onSuccess }: SigninFormProps) => {
       <GoogleButton fullWidth>Sign in with Google</GoogleButton>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
-      <form onSubmit={form.onSubmit((values) => handleSignin(values))}>
+      <form onSubmit={form.onSubmit((values) => signin.mutate(values))}>
         <TextInput
           label="Email"
           placeholder="example@email.com"
@@ -73,9 +53,13 @@ const SigninForm = ({ onSuccess }: SigninFormProps) => {
           required
           mt="md"
         />
-        <Checkbox label="Remember me" mt="lg" />
-        {/* <Button type="submit" fullWidth mt="xl" loading={signin.isPending}> */}
-        <Button type="submit" fullWidth mt="xl">
+        <Checkbox
+          label="Remember me"
+          key={form.key("rememberMe")}
+          {...form.getInputProps("rememberMe")}
+          mt="lg"
+        />
+        <Button type="submit" fullWidth mt="xl" loading={signin.isPending}>
           Sign in
         </Button>
       </form>
