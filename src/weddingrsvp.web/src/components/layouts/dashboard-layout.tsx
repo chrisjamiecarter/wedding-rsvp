@@ -1,13 +1,7 @@
 import { useNavigate } from "react-router";
-import { AppShell, Burger, Button, Group, NavLink } from "@mantine/core";
+import { AppShell, Burger, Group, NavLink } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  IconCalendarEvent,
-  IconHome,
-  IconTicket,
-  IconToolsKitchen,
-  IconUser,
-} from "@tabler/icons-react";
+import { Calendar, House, Mail, Utensils, Ticket } from "lucide-react";
 
 import { paths } from "@/configs/paths";
 
@@ -16,11 +10,19 @@ import { Brand } from "../ui/brand";
 import { Navbar } from "../ui/navbar";
 
 const navData = [
-  { link: paths.app.dashboard.getHref(), label: "Dashboard", icon: IconHome },
-  { link: "", label: "Events", icon: IconCalendarEvent },
-  { link: "", label: "Invites", icon: IconTicket },
-  { link: "", label: "Guests", icon: IconUser },
-  { link: "", label: "Food Options", icon: IconToolsKitchen },
+  { link: paths.app.dashboard.getHref(), label: "Dashboard", icon: House },
+  {
+    link: paths.app.events.getHref(),
+    label: "Events",
+    icon: Calendar,
+  },
+  { link: paths.app.invites.getHref(), label: "Invites", icon: Mail },
+  { link: paths.app.guests.getHref(), label: "Guests", icon: Ticket },
+  {
+    link: paths.app.foods.getHref(),
+    label: "Food Options",
+    icon: Utensils,
+  },
 ];
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {

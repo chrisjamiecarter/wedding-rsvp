@@ -1,24 +1,21 @@
-import { Icon, IconLogout, IconProps } from "@tabler/icons-react";
+import { LogOut } from "lucide-react";
 import classes from "./navbar.module.css";
 import { Button } from "@mantine/core";
+import { NavbarLink, NavbarLinkProps } from "../navbar-link/navbar-link";
 
-interface NavbarData {
-  link: string;
-  label: string;
-  icon: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<Icon>>;
-}
-
-interface NavbarProps {
-  navbarData: NavbarData[];
+export interface NavbarProps {
+  navbarData: NavbarLinkProps[];
   signoutFn: () => Promise<void>;
 }
 
 export function Navbar(props: NavbarProps) {
   const links = props.navbarData.map((item) => (
-    <a className={classes.link} href={item.link} key={item.label}>
-      <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
-    </a>
+    <NavbarLink
+      key={item.label}
+      icon={item.icon}
+      label={item.label}
+      link={item.link}
+    />
   ));
 
   return (
@@ -29,7 +26,7 @@ export function Navbar(props: NavbarProps) {
         <Button
           className={classes.button}
           leftSection={
-            <IconLogout className={classes.buttonLinkIcon} stroke={1.5} />
+            <LogOut className={classes.buttonLinkIcon} strokeWidth={1.5} />
           }
           fullWidth
           justify="left"
