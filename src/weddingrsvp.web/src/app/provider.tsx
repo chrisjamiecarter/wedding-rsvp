@@ -2,7 +2,6 @@ import * as React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 
 import { AuthLoader } from "@/lib/auth";

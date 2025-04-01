@@ -1,3 +1,5 @@
+import { useForm } from "@mantine/form";
+import { zodResolver } from "mantine-form-zod-resolver";
 import { GoogleButton } from "@/components/ui/google-button";
 import {
   Button,
@@ -7,8 +9,7 @@ import {
   PasswordInput,
   TextInput,
 } from "@mantine/core";
-import { isEmail, useForm } from "@mantine/form";
-import { useLogin } from "@/lib/auth";
+import { signinInputSchema, useLogin } from "@/lib/auth";
 
 interface SigninFormProps {
   onSuccess: () => void;
@@ -26,9 +27,7 @@ const SigninForm = ({ onSuccess }: SigninFormProps) => {
       password: "",
       rememberMe: false,
     },
-    validate: {
-      email: isEmail("Invalid email"),
-    },
+    validate: zodResolver(signinInputSchema),
   });
 
   return (
