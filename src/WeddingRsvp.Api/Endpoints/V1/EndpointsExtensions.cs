@@ -1,5 +1,4 @@
 ﻿using WeddingRsvp.Api.Endpoints.V1.Auth;
-using WeddingRsvp.Api.Endpoints.V1.EventFoodOptions;
 using WeddingRsvp.Api.Endpoints.V1.Events;
 using WeddingRsvp.Api.Endpoints.V1.FoodOptions;
 using WeddingRsvp.Api.Endpoints.V1.Guests;
@@ -14,7 +13,6 @@ public static class EndpointsExtensions
         app.MapAuthEndpoints();
         app.MapEventsEndpoints();
         app.MapFoodOptionsEndpoints();
-        app.MapEventFoodOptionsEndpoints();
         app.MapInvitesEndpoints();
         app.MapGuestsEndpoints();
 

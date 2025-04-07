@@ -38,20 +38,6 @@ namespace WeddingRsvp.Application.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FoodOption",
-                schema: "core",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    FoodType = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FoodOption", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Role",
                 schema: "auth",
                 columns: table => new
@@ -93,6 +79,28 @@ namespace WeddingRsvp.Application.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FoodOption",
+                schema: "core",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    FoodType = table.Column<int>(type: "integer", nullable: false),
+                    EventId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FoodOption", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FoodOption_Event_EventId",
+                        column: x => x.EventId,
+                        principalSchema: "core",
+                        principalTable: "Event",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Invite",
                 schema: "core",
                 columns: table => new
@@ -111,34 +119,6 @@ namespace WeddingRsvp.Application.Database.Migrations
                         column: x => x.EventId,
                         principalSchema: "core",
                         principalTable: "Event",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EventFoodOption",
-                schema: "core",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    EventId = table.Column<Guid>(type: "uuid", nullable: false),
-                    FoodOptionId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EventFoodOption", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EventFoodOption_Event_EventId",
-                        column: x => x.EventId,
-                        principalSchema: "core",
-                        principalTable: "Event",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EventFoodOption_FoodOption_FoodOptionId",
-                        column: x => x.FoodOptionId,
-                        principalSchema: "core",
-                        principalTable: "FoodOption",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -297,16 +277,10 @@ namespace WeddingRsvp.Application.Database.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventFoodOption_EventId",
+                name: "IX_FoodOption_EventId",
                 schema: "core",
-                table: "EventFoodOption",
+                table: "FoodOption",
                 column: "EventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EventFoodOption_FoodOptionId",
-                schema: "core",
-                table: "EventFoodOption",
-                column: "FoodOptionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Guest_DessertFoodOptionId",
@@ -380,10 +354,6 @@ namespace WeddingRsvp.Application.Database.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "EventFoodOption",
-                schema: "core");
-
             migrationBuilder.DropTable(
                 name: "Guest",
                 schema: "core");

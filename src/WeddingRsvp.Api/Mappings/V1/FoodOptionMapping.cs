@@ -8,25 +8,27 @@ namespace WeddingRsvp.Api.Mappings.V1;
 
 public static class FoodOptionMapping
 {
-    public static FoodOption ToEntity(this CreateFoodOptionRequest request)
+    public static FoodOption ToEntity(this CreateFoodOptionRequest request, Guid eventId)
     {
         Enum.TryParse<FoodType>(request.FoodType, true, out var foodType);
 
         return new FoodOption
         {
             Id = Guid.CreateVersion7(),
+            EventId = eventId,
             Name = request.Name,
             FoodType = foodType,
         };
     }
 
-    public static FoodOption ToEntity(this UpdateFoodOptionRequest request, Guid id)
+    public static FoodOption ToEntity(this UpdateFoodOptionRequest request, FoodOption existingEntity)
     {
         Enum.TryParse<FoodType>(request.FoodType, true, out var foodType);
 
         return new FoodOption
         {
-            Id = id,
+            Id = existingEntity.Id,
+            EventId = existingEntity.EventId,
             Name = request.Name,
             FoodType = foodType,
         };
@@ -35,6 +37,7 @@ public static class FoodOptionMapping
     public static FoodOptionResponse ToResponse(this FoodOption entity)
     {
         return new FoodOptionResponse(entity.Id,
+                                      entity.EventId,
                                       entity.Name,
                                       entity.FoodType.ToString());
     }

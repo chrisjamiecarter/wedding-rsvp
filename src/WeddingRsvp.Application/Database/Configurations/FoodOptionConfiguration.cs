@@ -19,10 +19,5 @@ internal sealed class FoodOptionConfiguration : IEntityTypeConfiguration<FoodOpt
         builder.Property(p => p.FoodType)
                .IsRequired()
                .HasConversion<int>();
-
-        builder.HasMany(e => e.EventFoodOptions)
-               .WithOne(o => o.FoodOption)
-               .HasForeignKey(fk => fk.FoodOptionId)
-               .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -13,12 +13,13 @@ public static class GetAllFoodOptionsEndpoint
 
     public static IEndpointRouteBuilder MapGetAllFoodOptions(this IEndpointRouteBuilder app)
     {
-        app.MapGet(Routes.FoodOptions.GetAll,
-            async ([AsParameters] GetAllFoodOptionsRequest request,
+        app.MapGet(Routes.Events.GetAllFoodOptions,
+            async (Guid eventId,
+                   [AsParameters] GetAllFoodOptionsRequest request,
                    IFoodOptionService foodOptionService,
                    CancellationToken cancellationToken) =>
             {
-                var options = request.ToOptions();
+                var options = request.ToOptions(eventId);
 
                 var foodOptions = await foodOptionService.GetAllAsync(options, cancellationToken);
 

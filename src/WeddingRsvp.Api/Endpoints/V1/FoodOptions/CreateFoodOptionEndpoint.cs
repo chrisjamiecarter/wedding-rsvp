@@ -15,13 +15,14 @@ public static class CreateFoodOptionEndpoint
 
     public static IEndpointRouteBuilder MapCreateFoodOption(this IEndpointRouteBuilder app)
     {
-        app.MapPost(Routes.FoodOptions.Create,
-            async (CreateFoodOptionRequest request,
+        app.MapPost(Routes.Events.CreateFoodOption,
+            async (Guid eventId,
+                   CreateFoodOptionRequest request,
                    IFoodOptionService foodOptionService,
                    IOutputCacheStore outputCacheStore,
                    CancellationToken cancellationToken) =>
             {
-                var foodOption = request.ToEntity();
+                var foodOption = request.ToEntity(eventId);
 
                 await foodOptionService.CreateAsync(foodOption, cancellationToken);
 

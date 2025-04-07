@@ -17,6 +17,9 @@ public sealed class FoodOptionValidator : AbstractValidator<FoodOption>
         RuleFor(x => x.Id)
             .NotEmpty();
 
+        RuleFor(x => x.EventId)
+            .NotEmpty();
+
         RuleFor(x => x.Name)
             .NotEmpty();
 

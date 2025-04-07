@@ -52,6 +52,8 @@ internal class FoodOptionService : IFoodOptionService
 
         var query = _dbContext.FoodOptions.AsQueryable();
 
+        query = query.Where(o => o.EventId == options.EventId);
+
         if (!string.IsNullOrWhiteSpace(options.Name))
         {
             query = query.Where(o => o.Name.Contains(options.Name));

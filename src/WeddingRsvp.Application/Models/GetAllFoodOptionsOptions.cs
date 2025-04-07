@@ -4,6 +4,7 @@ namespace WeddingRsvp.Application.Models;
 
 public sealed class GetAllFoodOptionsOptions
 {
+    public Guid EventId { get; set; }
     public string? Name { get; set; }
     public FoodType? FoodType { get; set; }
     public string? SortField { get; set; }

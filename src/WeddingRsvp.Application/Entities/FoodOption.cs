@@ -8,5 +8,6 @@ public sealed class FoodOption
     public required string Name { get; set; }
     public FoodType FoodType { get; set; } = FoodType.Unknown;
 
-    public ICollection<EventFoodOption>? EventFoodOptions { get; }
+    public Guid EventId { get; set; }
+    public Event? Event { get; set; }
 }

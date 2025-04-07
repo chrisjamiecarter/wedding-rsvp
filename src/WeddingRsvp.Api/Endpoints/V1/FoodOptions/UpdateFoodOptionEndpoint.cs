@@ -22,7 +22,13 @@ public static class UpdateFoodOptionEndpoint
                    IOutputCacheStore outputCacheStore,
                    CancellationToken cancellationToken) =>
             {
-                var foodOption = request.ToEntity(id);
+                var existingFoodOption = await foodOptionService.GetByIdAsync(id, cancellationToken);
+                if (existingFoodOption is null)
+                {
+                    return Results.NotFound();
+                }
+
+                var foodOption = request.ToEntity(existingFoodOption);
 
                 var updatedFoodOption = await foodOptionService.UpdateAsync(foodOption, cancellationToken);
                 if (updatedFoodOption is null)

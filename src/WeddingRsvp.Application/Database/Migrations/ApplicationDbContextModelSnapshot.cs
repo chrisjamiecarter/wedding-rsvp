@@ -255,31 +255,13 @@ namespace WeddingRsvp.Application.Database.Migrations
                     b.ToTable("Event", "core");
                 });
 
-            modelBuilder.Entity("WeddingRsvp.Application.Entities.EventFoodOption", b =>
+            modelBuilder.Entity("WeddingRsvp.Application.Entities.FoodOption", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("EventId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("FoodOptionId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("FoodOptionId");
-
-                    b.ToTable("EventFoodOption", "core");
-                });
-
-            modelBuilder.Entity("WeddingRsvp.Application.Entities.FoodOption", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<int>("FoodType")
@@ -290,6 +272,8 @@ namespace WeddingRsvp.Application.Database.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventId");
 
                     b.ToTable("FoodOption", "core");
                 });
@@ -405,23 +389,15 @@ namespace WeddingRsvp.Application.Database.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WeddingRsvp.Application.Entities.EventFoodOption", b =>
+            modelBuilder.Entity("WeddingRsvp.Application.Entities.FoodOption", b =>
                 {
                     b.HasOne("WeddingRsvp.Application.Entities.Event", "Event")
-                        .WithMany("EventFoodOptions")
+                        .WithMany("FoodOptions")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WeddingRsvp.Application.Entities.FoodOption", "FoodOption")
-                        .WithMany("EventFoodOptions")
-                        .HasForeignKey("FoodOptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Event");
-
-                    b.Navigation("FoodOption");
                 });
 
             modelBuilder.Entity("WeddingRsvp.Application.Entities.Guest", b =>
@@ -460,14 +436,9 @@ namespace WeddingRsvp.Application.Database.Migrations
 
             modelBuilder.Entity("WeddingRsvp.Application.Entities.Event", b =>
                 {
-                    b.Navigation("EventFoodOptions");
+                    b.Navigation("FoodOptions");
 
                     b.Navigation("Invites");
-                });
-
-            modelBuilder.Entity("WeddingRsvp.Application.Entities.FoodOption", b =>
-                {
-                    b.Navigation("EventFoodOptions");
                 });
 
             modelBuilder.Entity("WeddingRsvp.Application.Entities.Invite", b =>

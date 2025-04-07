@@ -7,12 +7,13 @@ namespace WeddingRsvp.Api.Mappings.V1;
 
 public static class GetAllFoodOptionsMapping
 {
-    public static GetAllFoodOptionsOptions ToOptions(this GetAllFoodOptionsRequest request)
+    public static GetAllFoodOptionsOptions ToOptions(this GetAllFoodOptionsRequest request, Guid eventId)
     {
         Enum.TryParse<FoodType>(request.FoodType, true, out var foodType);
 
         return new GetAllFoodOptionsOptions
         {
+            EventId = eventId,
             Name = request.Name,
             FoodType = request.FoodType is null
                 ? null
