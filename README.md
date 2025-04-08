@@ -9,9 +9,9 @@ This is a modern wedding invitation and RSVP management system built with .NET 9
 
 ## High-Level Architecture
 
-- Frontend: React (with Material UI Component Library)
+- Frontend: React (with Mantine UI Component Library)
 - Backend: .NET 9 Minimal API with ASP.NET Identity
-- Database: SQL Server
+- Database: Postgres/SQL Server (TBC)
 - Authentication: ASP.NET Identity for Invitees + Google Auth for Admin
 - Hosting: Budget-friendly cloud provider (e.g., DigitalOcean, Linode, or AWS - Lightsail)
 - Email Provider: SendGrid, Mailgun, or Amazon SES (cost-effective options)
@@ -21,6 +21,7 @@ This is a modern wedding invitation and RSVP management system built with .NET 9
 - Event
 
   - Id (GUID, PRIMARY KEY)
+  - UserId (NVARCHAR, FOREIGN KEY)
   - Name (NVARCHAR)
   - Description (NVARCHAR)
   - Venue (NVARCHAR)
@@ -29,22 +30,12 @@ This is a modern wedding invitation and RSVP management system built with .NET 9
   - Time (Time)
   - DressCode (NVARCHAR)
 
-- FoodType
-
-  - Id (GUID, PRIMARY KEY)
-  - Name (NVARCHAR, UNIQUE)
-
 - FoodOption
 
   - Id (GUID, PRIMARY KEY)
-  - FoodTypeId (GUID, FOREIGN KEY)
-  - Name (NVARCHAR)
-
-- EventFoodOption
-
-  - Id (GUID, PRIMARY KEY)
   - EventId (GUID, FOREIGN KEY)
-  - FoodOptionId (GUID, FOREIGN KEY)
+  - FoodType (GUID, ENUM)
+  - Name (NVARCHAR)
 
 - Invite
 
@@ -54,24 +45,16 @@ This is a modern wedding invitation and RSVP management system built with .NET 9
   - HouseholdName (NVARCHAR)
   - UniqueLinkToken (GUID, NULL)
 
-- RsvpStatus
-
-  - Id (GUID, PRIMARY KEY)
-  - Name (NVARCHAR, UNIQUE)
-
 - Guest
 
   - Id (GUID, PRIMARY KEY)
   - InviteId (GUID, FOREIGN KEY)
   - Name (NVARCHAR)
-  - RsvpStatusId (GUID, FOREIGN KEY)
+  - RsvpStatus (GUID, ENUM)
   - MainFoodOptionId (GUID, FOREIGN KEY, NULL)
   - DessertFoodOptionId (GUID, FOREIGN KEY, NULL)
 
-- ApplicationUser
-
-  - Id (GUID, PRIMARY KEY)
-  - Email (NVARCHAR, UNIQUE)
+- User : IdentityUser
 
 ![entity-relationship-diagram](./_resources/entity-relationship-diagram.png)
 
