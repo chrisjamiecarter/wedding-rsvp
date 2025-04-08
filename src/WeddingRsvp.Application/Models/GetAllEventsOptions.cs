@@ -4,6 +4,7 @@ namespace WeddingRsvp.Application.Models;
 
 public sealed class GetAllEventsOptions
 {
+    public required string UserId { get; set; }
     public string? Name { get; set; }
     public string? Venue { get; set; }
     public DateOnly? DateFrom { get; set; }

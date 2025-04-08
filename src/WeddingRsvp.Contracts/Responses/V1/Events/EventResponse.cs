@@ -1,6 +1,7 @@
 ﻿namespace WeddingRsvp.Contracts.Responses.V1.Events;
 
 public sealed record EventResponse(Guid Id,
+                                   string UserId,
                                    string Name,
                                    string Description,
                                    string Venue,

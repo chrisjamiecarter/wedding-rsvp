@@ -31,9 +31,9 @@ internal class EventService : IEventService
         return result > 0;
     }
 
-    public async Task<bool> DeleteByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteAsync(DeleteEventOptions options, CancellationToken cancellationToken = default)
     {
-        var existingEvent = await _dbContext.Events.FindAsync([id], cancellationToken);
+        var existingEvent = await _dbContext.Events.SingleOrDefaultAsync(e => e.Id == options.EventId && e.UserId == options.UserId, cancellationToken);
         if (existingEvent is null)
         {
             return false;
@@ -51,6 +51,8 @@ internal class EventService : IEventService
         await _getAllEventsOptionsValidator.ValidateAndThrowAsync(options, cancellationToken);
 
         var query = _dbContext.Events.AsQueryable();
+
+        query = query.Where(e => e.UserId == options.UserId);
 
         if (!string.IsNullOrWhiteSpace(options.Name))
         {
@@ -89,16 +91,16 @@ internal class EventService : IEventService
         return PaginatedList<Event>.Create(items, count, options.PageNumber, options.PageSize);
     }
 
-    public async Task<Event?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Event?> GetAsync(GetEventOptions options, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Events.SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
+        return await _dbContext.Events.SingleOrDefaultAsync(e => e.Id == options.EventId && e.UserId == options.UserId, cancellationToken);
     }
 
     public async Task<Event?> UpdateAsync(Event evnt, CancellationToken cancellationToken = default)
     {
         await _eventValidator.ValidateAndThrowAsync(evnt, cancellationToken);
 
-        var existingEvent = await _dbContext.Events.FindAsync([evnt.Id], cancellationToken);
+        var existingEvent = await _dbContext.Events.SingleOrDefaultAsync(e => e.Id == evnt.Id && e.UserId == evnt.UserId, cancellationToken);
         if (existingEvent is null)
         {
             return null;

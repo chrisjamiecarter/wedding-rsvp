@@ -7,10 +7,11 @@ namespace WeddingRsvp.Api.Mappings.V1;
 
 public static class GetAllEventsMapping
 {
-    public static GetAllEventsOptions ToOptions(this GetAllEventsRequest request)
+    public static GetAllEventsOptions ToOptions(this GetAllEventsRequest request, string userId)
     {
         return new GetAllEventsOptions
         {
+            UserId = userId,
             Name = request.Name,
             Venue = request.Venue,
             DateFrom = request.DateFrom,

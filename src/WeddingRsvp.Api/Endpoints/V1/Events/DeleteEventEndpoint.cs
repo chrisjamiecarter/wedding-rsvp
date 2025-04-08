@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.OutputCaching;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.OutputCaching;
 using WeddingRsvp.Application.Auth;
 using WeddingRsvp.Application.Cache;
+using WeddingRsvp.Application.Models;
 using WeddingRsvp.Application.Services;
 
 namespace WeddingRsvp.Api.Endpoints.V1.Events;
@@ -13,11 +15,24 @@ public static class DeleteEventEndpoint
     {
         app.MapDelete(Routes.Events.Delete,
             async (Guid id,
+                   ClaimsPrincipal user,
                    IEventService eventService,
                    IOutputCacheStore outputCacheStore,
                    CancellationToken cancellationToken) =>
             {
-                var deleted = await eventService.DeleteByIdAsync(id, cancellationToken);
+                var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (userId is null)
+                {
+                    return Results.Unauthorized();
+                }
+
+                var options = new DeleteEventOptions
+                { 
+                    EventId = id,
+                    UserId = userId 
+                };
+
+                var deleted = await eventService.DeleteAsync(options, cancellationToken);
                 if (!deleted)
                 {
                     return Results.NotFound();

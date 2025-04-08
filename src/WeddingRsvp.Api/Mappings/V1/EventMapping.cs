@@ -7,11 +7,12 @@ namespace WeddingRsvp.Api.Mappings.V1;
 
 public static class EventMapping
 {
-    public static Event ToEntity(this CreateEventRequest request)
+    public static Event ToEntity(this CreateEventRequest request, string userId)
     {
         return new Event
         {
             Id = Guid.CreateVersion7(),
+            UserId = userId,
             Name = request.Name,
             Description = request.Description,
             Venue = request.Venue,
@@ -22,11 +23,12 @@ public static class EventMapping
         };
     }
 
-    public static Event ToEntity(this UpdateEventRequest request, Guid id)
+    public static Event ToEntity(this UpdateEventRequest request, Guid id, string userId)
     {
         return new Event
         {
             Id = id,
+            UserId = userId,
             Name = request.Name,
             Description = request.Description,
             Venue = request.Venue,
@@ -40,6 +42,7 @@ public static class EventMapping
     public static EventResponse ToResponse(this Event entity)
     {
         return new EventResponse(entity.Id,
+                                 entity.UserId,
                                  entity.Name,
                                  entity.Description,
                                  entity.Venue,

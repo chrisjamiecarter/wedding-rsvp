@@ -1,4 +1,5 @@
-﻿using WeddingRsvp.Api.Mappings.V1;
+﻿using System.Security.Claims;
+using WeddingRsvp.Api.Mappings.V1;
 using WeddingRsvp.Application.Auth;
 using WeddingRsvp.Application.Cache;
 using WeddingRsvp.Application.Services;
@@ -15,10 +16,17 @@ public static class GetAllEventsEndpoint
     {
         app.MapGet(Routes.Events.GetAll,
             async ([AsParameters] GetAllEventsRequest request,
+                   ClaimsPrincipal user,
                    IEventService eventService,
                    CancellationToken cancellationToken) =>
             {
-                var options = request.ToOptions();
+                var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (userId is null)
+                {
+                    return Results.Unauthorized();
+                }
+
+                var options = request.ToOptions(userId);
 
                 var events = await eventService.GetAllAsync(options, cancellationToken);
 

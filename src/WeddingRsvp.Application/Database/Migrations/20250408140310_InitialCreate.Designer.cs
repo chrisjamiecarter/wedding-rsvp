@@ -12,7 +12,7 @@ using WeddingRsvp.Application.Database;
 namespace WeddingRsvp.Application.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250407210926_InitialCreate")]
+    [Migration("20250408140310_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -249,11 +249,17 @@ namespace WeddingRsvp.Application.Database.Migrations
                     b.Property<TimeOnly>("Time")
                         .HasColumnType("time without time zone");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Venue")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Event", "core");
                 });
@@ -392,6 +398,17 @@ namespace WeddingRsvp.Application.Database.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WeddingRsvp.Application.Entities.Event", b =>
+                {
+                    b.HasOne("WeddingRsvp.Application.Entities.ApplicationUser", "User")
+                        .WithMany("Events")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WeddingRsvp.Application.Entities.FoodOption", b =>
                 {
                     b.HasOne("WeddingRsvp.Application.Entities.Event", "Event")
@@ -435,6 +452,11 @@ namespace WeddingRsvp.Application.Database.Migrations
                         .IsRequired();
 
                     b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("WeddingRsvp.Application.Entities.ApplicationUser", b =>
+                {
+                    b.Navigation("Events");
                 });
 
             modelBuilder.Entity("WeddingRsvp.Application.Entities.Event", b =>

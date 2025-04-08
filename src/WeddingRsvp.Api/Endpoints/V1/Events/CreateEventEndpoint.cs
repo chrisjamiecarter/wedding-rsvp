@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.OutputCaching;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.OutputCaching;
 using WeddingRsvp.Api.Mappings.V1;
 using WeddingRsvp.Application.Auth;
 using WeddingRsvp.Application.Cache;
@@ -17,11 +18,18 @@ public static class CreateEventEndpoint
     {
         app.MapPost(Routes.Events.Create,
             async (CreateEventRequest request,
+                   ClaimsPrincipal user,
                    IEventService eventService,
                    IOutputCacheStore outputCacheStore,
                    CancellationToken cancellationToken) =>
             {
-                var evnt = request.ToEntity();
+                var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (userId is null)
+                {
+                    return Results.Unauthorized();
+                }
+
+                var evnt = request.ToEntity(userId);
 
                 await eventService.CreateAsync(evnt, cancellationToken);
 

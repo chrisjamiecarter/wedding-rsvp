@@ -10,6 +10,9 @@ public sealed class EventValidator : AbstractValidator<Event>
         RuleFor(x => x.Id)
             .NotEmpty();
 
+        RuleFor(x => x.UserId)
+            .NotEmpty();
+
         RuleFor(x => x.Name)
             .NotEmpty();
 
