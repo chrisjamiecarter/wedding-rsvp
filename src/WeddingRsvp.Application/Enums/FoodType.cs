@@ -3,6 +3,6 @@
 public enum FoodType
 {
     Unknown = 0,
-    Breakfast = 1,
-    Main = 2,
+    Main = 1,
+    Dessert = 2,
 }

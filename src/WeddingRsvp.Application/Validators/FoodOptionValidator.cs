@@ -8,8 +8,8 @@ public sealed class FoodOptionValidator : AbstractValidator<FoodOption>
 {
     private static readonly FoodType[] ValidFoodTypes =
     [
-        FoodType.Breakfast,
         FoodType.Main,
+        FoodType.Dessert,
     ];
 
     public FoodOptionValidator()

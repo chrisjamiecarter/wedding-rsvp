@@ -8,8 +8,8 @@ public sealed class GetAllFoodOptionsValidator : AbstractValidator<GetAllFoodOpt
 {
     private static readonly FoodType[] ValidFoodTypes =
     [
-        FoodType.Breakfast,
         FoodType.Main,
+        FoodType.Dessert,
     ];
 
     private static readonly string[] ValidSortFields = 
