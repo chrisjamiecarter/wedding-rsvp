@@ -83,6 +83,18 @@ public static class AssemblyInstaller
                       .Expire(Policies.FoodOption.Expiration)
                       .Tag(Policies.FoodOption.Tag);
             });
+            options.AddPolicy(Policies.Guest.Name, policy =>
+            {
+                policy.Cache()
+                      .Expire(Policies.Guest.Expiration)
+                      .Tag(Policies.Guest.Tag);
+            });
+            options.AddPolicy(Policies.Invite.Name, policy =>
+            {
+                policy.Cache()
+                      .Expire(Policies.Invite.Expiration)
+                      .Tag(Policies.Invite.Tag);
+            });
         });
 
         services.AddScoped<IAuthService, AuthService>();
