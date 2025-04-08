@@ -67,7 +67,7 @@ internal sealed class SeederService
                 return;
             }
 
-            _logger.LogInformation("Created seed user: {email} {password}", user.Email, password);
+            _logger.LogWarning("Created seed user: {email} {password}", user.Email, password);
 
             var claim = new Claim(AuthConstants.AdminClaimName, "true");
 
