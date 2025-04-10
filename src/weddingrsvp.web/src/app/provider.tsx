@@ -3,6 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { MantineProvider } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 
 import { AuthLoader } from "@/lib/auth";
 import { queryConfig } from "@/lib/react-query";
@@ -23,6 +24,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       <React.Suspense fallback={<LoadingPage />}>
         <ErrorBoundary FallbackComponent={MainErrorFallback}>
           <QueryClientProvider client={queryClient}>
+            <Notifications position="top-right" />
             <AuthLoader renderLoading={() => <LoadingPage />}>
               {children}
             </AuthLoader>
