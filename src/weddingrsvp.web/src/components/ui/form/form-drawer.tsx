@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Button, Drawer, Stack } from "@mantine/core";
+import { Button, Drawer } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
-type FormDrawerProps = {
+export type FormDrawerProps = {
   isDone: boolean;
   submitButton: React.ReactElement;
   title: string;
