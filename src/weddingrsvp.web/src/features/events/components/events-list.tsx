@@ -5,6 +5,7 @@ import { LoadingPage } from "@/components/ui/loading-page";
 import { Table } from "@mantine/core";
 import { Link } from "@/components/ui/link";
 import { paths } from "@/configs/paths";
+import DeleteEvent from "./delete-event";
 
 export const EventsList = () => {
   const [searchParams] = useSearchParams();
@@ -34,6 +35,9 @@ export const EventsList = () => {
       <Table.Td>
         <Link to={paths.app.event.getHref(event.id)}>View</Link>
       </Table.Td>
+      <Table.Td>
+        <DeleteEvent id={event.id} />
+      </Table.Td>
     </Table.Tr>
   ));
 
@@ -47,6 +51,7 @@ export const EventsList = () => {
           <Table.Th>Address</Table.Th>
           <Table.Th>Date & Time</Table.Th>
           <Table.Th>Dress Code</Table.Th>
+          <Table.Th></Table.Th>
           <Table.Th></Table.Th>
         </Table.Tr>
       </Table.Thead>
