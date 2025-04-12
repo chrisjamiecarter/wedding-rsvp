@@ -10,6 +10,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { signinInputSchema, useLogin } from "@/lib/auth";
+import googleSignin from "../api/google-signin";
 
 interface SigninFormProps {
   onSuccess: () => void;
@@ -32,7 +33,9 @@ const SigninForm = ({ onSuccess }: SigninFormProps) => {
 
   return (
     <Paper withBorder shadow="md" p={30} mt={20} radius="md">
-      <GoogleButton fullWidth>Sign in with Google</GoogleButton>
+      <GoogleButton fullWidth onClick={googleSignin}>
+        Sign in with Google
+      </GoogleButton>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
       <form onSubmit={form.onSubmit((values) => signin.mutate(values))}>

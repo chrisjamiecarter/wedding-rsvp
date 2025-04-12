@@ -36,6 +36,7 @@ public static class AssemblyInstaller
                 .AddBearerToken(IdentityConstants.BearerScheme)
                 .AddGoogle(googleOptions =>
                 {
+                    googleOptions.SignInScheme = IdentityConstants.ExternalScheme;
                     googleOptions.ClientId = configuration["Authentication:Google:ClientId"] ?? throw new InvalidOperationException("Configuration setting 'Authentication:Google:ClientId' not found");
                     googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"] ?? throw new InvalidOperationException("Configuration setting 'Authentication:Google:ClientSecret' not found");
                     googleOptions.AccessDeniedPath = "/Account/AccessDenied";
@@ -53,6 +54,12 @@ public static class AssemblyInstaller
                         }
                     };
                 });
+
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.SameSite = SameSiteMode.Lax;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        });
 
         services.AddAuthorizationBuilder()
                 .AddPolicy(AuthConstants.AdminPolicyName, policy =>

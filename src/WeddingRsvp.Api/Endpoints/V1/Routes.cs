@@ -8,6 +8,8 @@ public static class Routes
     {
         private const string Base = $"{ApiBase}/auth";
 
+        public const string ExternalLogin = $"{Base}/external-login";
+        public const string GoogleLogin = $"{Base}/google-login";
         public const string Logout = $"{Base}/logout";
         public const string Me = $"{Base}/me";
     }

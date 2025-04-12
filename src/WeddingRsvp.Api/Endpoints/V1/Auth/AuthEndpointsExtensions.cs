@@ -4,8 +4,9 @@ public static class AuthEndpointsExtensions
 {
     public static IEndpointRouteBuilder MapAuthEndpoints(this IEndpointRouteBuilder app)
     {
-        // Identity doesnt map a logout endpoint.
-        app.MapLogout();
+        app.MapExternalLogin();
+        app.MapGoogleLogin();
+        app.MapLogout(); // Identity doesn't map a logout endpoint.
         app.MapMe();
 
         return app;
