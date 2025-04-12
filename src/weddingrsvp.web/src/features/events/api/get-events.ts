@@ -4,29 +4,31 @@ import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
 import { Event, PagedResponse } from "@/types/api";
 
-export const getEvents = (page = 1): Promise<PagedResponse<Event>> => {
+export const getEvents = (pageNumber = 1): Promise<PagedResponse<Event>> => {
   return api.get(`/api/events`, {
     params: {
-      page,
+      pageNumber,
     },
   });
 };
 
-export const getEventsQueryOptions = ({ page }: { page?: number } = {}) => {
+export const getEventsQueryOptions = ({
+  pageNumber,
+}: { pageNumber?: number } = {}) => {
   return queryOptions({
-    queryKey: page ? ["events", { page }] : ["events"],
-    queryFn: () => getEvents(page),
+    queryKey: pageNumber ? ["events", { pageNumber }] : ["events"],
+    queryFn: () => getEvents(pageNumber),
   });
 };
 
 interface UseEventsOptions {
-  page?: number;
+  pageNumber?: number;
   queryConfig?: QueryConfig<typeof getEventsQueryOptions>;
 }
 
-export const useEvents = ({ queryConfig, page }: UseEventsOptions) => {
+export const useEvents = ({ queryConfig, pageNumber }: UseEventsOptions) => {
   return useQuery({
-    ...getEventsQueryOptions({ page }),
+    ...getEventsQueryOptions({ pageNumber }),
     ...queryConfig,
   });
 };

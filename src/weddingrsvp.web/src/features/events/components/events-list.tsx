@@ -1,17 +1,18 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useEvents } from "../api/get-events";
 import { LoadingPage } from "@/components/ui/loading-page";
-import { Button, Table } from "@mantine/core";
+import { Button, Group, Pagination, Table } from "@mantine/core";
 import { Link } from "@/components/ui/link";
 import { paths } from "@/configs/paths";
 import DeleteEvent from "./delete-event";
 
 export const EventsList = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   const eventsQuery = useEvents({
-    page: +(searchParams.get("page") || 1),
+    pageNumber: +(searchParams.get("page") || 1),
   });
 
   const queryClient = useQueryClient();
@@ -20,6 +21,8 @@ export const EventsList = () => {
     return <LoadingPage />;
   }
 
+  const pageNumber = eventsQuery.data?.pageNumber ?? 1;
+  const totalPages = eventsQuery.data?.totalPages ?? 1;
   const events = eventsQuery.data?.items;
 
   if (!events) return null;
@@ -43,21 +46,36 @@ export const EventsList = () => {
     </Table.Tr>
   ));
 
+  function navigateToPage(value: number): void {
+    const href = `${paths.app.events.getHref()}?page=${value}`;
+    navigate(href);
+  }
+
   return (
-    <Table highlightOnHover>
-      <Table.Thead>
-        <Table.Tr>
-          <Table.Th>Name</Table.Th>
-          <Table.Th>Description</Table.Th>
-          <Table.Th>Venue</Table.Th>
-          <Table.Th>Address</Table.Th>
-          <Table.Th>Date & Time</Table.Th>
-          <Table.Th>Dress Code</Table.Th>
-          <Table.Th></Table.Th>
-          <Table.Th></Table.Th>
-        </Table.Tr>
-      </Table.Thead>
-      <Table.Tbody>{rows}</Table.Tbody>
-    </Table>
+    <>
+      <Table highlightOnHover>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Name</Table.Th>
+            <Table.Th>Description</Table.Th>
+            <Table.Th>Venue</Table.Th>
+            <Table.Th>Address</Table.Th>
+            <Table.Th>Date & Time</Table.Th>
+            <Table.Th>Dress Code</Table.Th>
+            <Table.Th></Table.Th>
+            <Table.Th></Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
+      <Group mt="lg" justify="end">
+        <Pagination
+          total={totalPages}
+          value={pageNumber}
+          onChange={navigateToPage}
+          withEdges
+        />
+      </Group>
+    </>
   );
 };
