@@ -26,6 +26,6 @@ public sealed class EventValidator : AbstractValidator<Event>
             .NotEmpty();
 
         RuleFor(x => x.Time)
-            .NotEmpty();
+            .NotNull();
     }
 }
