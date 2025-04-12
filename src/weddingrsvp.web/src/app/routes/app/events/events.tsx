@@ -11,7 +11,12 @@ const EventsRoute = () => {
       <Group justify="end">
         <CreateEvent />
       </Group>
-      <EventsList />
+      <EventsList
+        onEventPrefetch={(id) => {
+          // TODO: Prefetch the guests / foodoptions
+          console.log("onEventPrefetch", id);
+        }}
+      />
     </ContentLayout>
   );
 };

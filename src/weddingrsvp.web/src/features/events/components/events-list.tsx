@@ -6,8 +6,13 @@ import { Button, Group, Pagination, Table } from "@mantine/core";
 import { Link } from "@/components/ui/link";
 import { paths } from "@/configs/paths";
 import DeleteEvent from "./delete-event";
+import { getEventQueryOptions } from "../api/get-event";
 
-export const EventsList = () => {
+export type EventsListProps = {
+  onEventPrefetch: (id: string) => void;
+};
+
+export const EventsList = ({ onEventPrefetch }: EventsListProps) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -36,7 +41,12 @@ export const EventsList = () => {
       <Table.Td>{`${event.date} ${event.time}`}</Table.Td>
       <Table.Td>{event.dressCode}</Table.Td>
       <Table.Td>
-        <Link to={paths.app.event.getHref(event.id)}>
+        <Link
+          onMouseEnter={() => {
+            queryClient.prefetchQuery(getEventQueryOptions(event.id));
+            onEventPrefetch?.(event.id);
+          }}
+          to={paths.app.event.getHref(event.id)}>
           <Button variant="transparent">View</Button>
         </Link>
       </Table.Td>
