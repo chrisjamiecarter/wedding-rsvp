@@ -1,4 +1,5 @@
 import { FormDrawer } from "@/components/ui/form/form-drawer";
+import CustomNotifications from "@/components/ui/notifications/notifications";
 import {
   createEventInputSchema,
   useCreateEvent,
@@ -11,8 +12,10 @@ export const CreateEvent = () => {
   const createEventMutation = useCreateEvent({
     mutationConfig: {
       onSuccess: () => {
-        // TODO: NOTIFICATIONS.
-        console.log("CreateEvent - Success");
+        CustomNotifications.success({
+          title: "Event Created",
+          message: "",
+        });
       },
     },
   });

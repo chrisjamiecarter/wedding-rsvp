@@ -3,6 +3,7 @@ import { Button } from "@mantine/core";
 import { ConfirmationDialog } from "@/components/ui/dialog/confirmation-dialog";
 
 import { useDeleteEvent } from "../api/delete-event";
+import CustomNotifications from "@/components/ui/notifications/notifications";
 
 type DeleteEventProps = {
   id: string;
@@ -12,8 +13,10 @@ const DeleteEvent = ({ id }: DeleteEventProps) => {
   const deleteEventMutation = useDeleteEvent({
     mutationConfig: {
       onSuccess: () => {
-        // TODO: NOTIFICATIONS.
-        console.log("DeleteEvent - Success");
+        CustomNotifications.success({
+          title: "Event Deleted",
+          message: "",
+        });
       },
     },
   });
