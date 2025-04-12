@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Drawer } from "@mantine/core";
+import { Button, Drawer, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 export type FormDrawerProps = {
@@ -37,7 +37,12 @@ export const FormDrawer = ({
         size="xl"
         title={title}>
         {children}
-        {submitButton}
+        <Group justify="end" mt="lg">
+          <Button variant="default" onClick={close}>
+            Close
+          </Button>
+          {submitButton}
+        </Group>
       </Drawer>
     </>
   );

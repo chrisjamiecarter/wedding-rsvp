@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "react-router";
 import { useEvents } from "../api/get-events";
 import { LoadingPage } from "@/components/ui/loading-page";
-import { Table } from "@mantine/core";
+import { Button, Table } from "@mantine/core";
 import { Link } from "@/components/ui/link";
 import { paths } from "@/configs/paths";
 import DeleteEvent from "./delete-event";
@@ -33,7 +33,9 @@ export const EventsList = () => {
       <Table.Td>{`${event.date} ${event.time}`}</Table.Td>
       <Table.Td>{event.dressCode}</Table.Td>
       <Table.Td>
-        <Link to={paths.app.event.getHref(event.id)}>View</Link>
+        <Link to={paths.app.event.getHref(event.id)}>
+          <Button variant="transparent">View</Button>
+        </Link>
       </Table.Td>
       <Table.Td>
         <DeleteEvent id={event.id} />
