@@ -7,6 +7,7 @@ import {
 import { Button, TextInput } from "@mantine/core";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
+import { Plus } from "lucide-react";
 
 export const CreateEvent = () => {
   const createEventMutation = useCreateEvent({
@@ -45,6 +46,7 @@ export const CreateEvent = () => {
           Submit
         </Button>
       }
+      triggerButtonIcon={<Plus size={16} />}
       title="Create Event">
       <form
         id="create-event"

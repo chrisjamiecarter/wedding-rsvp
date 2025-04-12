@@ -4,6 +4,7 @@ import { ConfirmationDialog } from "@/components/ui/dialog/confirmation-dialog";
 
 import { useDeleteEvent } from "../api/delete-event";
 import CustomNotifications from "@/components/ui/notifications/notifications";
+import { Trash } from "lucide-react";
 
 type DeleteEventProps = {
   id: string;
@@ -35,6 +36,7 @@ const DeleteEvent = ({ id }: DeleteEventProps) => {
           Delete
         </Button>
       }
+      triggerButtonContent={<Trash size={16} />}
     />
   );
 };

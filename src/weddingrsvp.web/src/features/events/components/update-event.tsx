@@ -7,6 +7,7 @@ import { FormDrawer } from "@/components/ui/form/form-drawer";
 import { updateEventInputSchema, useUpdateEvent } from "../api/update-event";
 import { useEvent } from "../api/get-event";
 import CustomNotifications from "@/components/ui/notifications/notifications";
+import { Pencil } from "lucide-react";
 
 type UpdateEventProps = {
   eventId: string;
@@ -52,6 +53,7 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
           Submit
         </Button>
       }
+      triggerButtonIcon={<Pencil size={16} />}
       title="Update Event">
       <form
         id="update-event"

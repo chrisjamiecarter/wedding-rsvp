@@ -5,6 +5,7 @@ import { CircleAlert, Info } from "lucide-react";
 
 export type ConfirmationDialogProps = {
   confirmButton: React.ReactElement;
+  triggerButtonContent: React.ReactElement;
   title: string;
   action?: string;
   body?: string;
@@ -15,8 +16,8 @@ export type ConfirmationDialogProps = {
 
 export const ConfirmationDialog = ({
   confirmButton,
+  triggerButtonContent,
   title,
-  action = "Delete",
   body = "Are you sure you want to delete?",
   cancelButtonText = "Cancel",
   type = "danger",
@@ -33,7 +34,7 @@ export const ConfirmationDialog = ({
   return (
     <>
       <Button color={type === "danger" ? "red" : ""} onClick={open}>
-        {action}
+        {triggerButtonContent}
       </Button>
       <Modal.Root opened={opened} onClose={close} centered>
         <Modal.Overlay />

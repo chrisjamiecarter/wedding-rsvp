@@ -5,6 +5,7 @@ import { useDisclosure } from "@mantine/hooks";
 export type FormDrawerProps = {
   isDone: boolean;
   submitButton: React.ReactElement;
+  triggerButtonIcon: React.ReactElement;
   title: string;
   children: React.ReactNode;
 };
@@ -12,6 +13,7 @@ export type FormDrawerProps = {
 export const FormDrawer = ({
   isDone,
   submitButton,
+  triggerButtonIcon,
   title,
   children,
 }: FormDrawerProps) => {
@@ -25,7 +27,7 @@ export const FormDrawer = ({
 
   return (
     <>
-      <Button variant="default" onClick={open}>
+      <Button variant="default" onClick={open} leftSection={triggerButtonIcon}>
         {title}
       </Button>
       <Drawer
