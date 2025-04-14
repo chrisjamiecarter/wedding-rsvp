@@ -19,7 +19,7 @@ const convert = (queryClient: QueryClient) => (m: any) => {
   };
 };
 
-export const createAppRouter = (queryClient: QueryClient) => {
+const createAppRouter = (queryClient: QueryClient) => {
   return createBrowserRouter([
     {
       path: paths.home.path,
