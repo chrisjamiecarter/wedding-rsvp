@@ -39,3 +39,11 @@ export type Invite = Entity<{
   householdName: string;
   uniqueLinkToken: string;
 }>;
+
+export type Food = Entity<{
+  eventId: string;
+  name: string;
+  foodType: string;
+}>;
+
+export const FoodTypes = ["Main", "Dessert"] as const;
