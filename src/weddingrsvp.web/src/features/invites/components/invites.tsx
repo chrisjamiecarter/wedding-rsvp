@@ -1,4 +1,6 @@
-import { Button, Group } from "@mantine/core";
+import { Group } from "@mantine/core";
+import { CreateInvite } from "./create-invite";
+import { InvitesList } from "./invites-list";
 
 type InvitesProps = {
   eventId: string;
@@ -7,10 +9,10 @@ type InvitesProps = {
 const Invites = ({ eventId }: InvitesProps) => {
   return (
     <>
-      Hello from Invites: Event ID = {eventId}
-      <Group justify="end">
-        <Button>Create Invite</Button>
+      <Group justify="end" mt="sm">
+        <CreateInvite eventId={eventId} />
       </Group>
+      <InvitesList eventId={eventId} />
     </>
   );
 };
