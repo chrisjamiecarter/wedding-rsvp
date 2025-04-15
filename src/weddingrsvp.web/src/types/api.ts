@@ -32,3 +32,10 @@ export type Event = Entity<{
   time: string;
   dressCode: string;
 }>;
+
+export type Invite = Entity<{
+  eventId: string;
+  email: string;
+  householdName: string;
+  uniqueLinkToken: string;
+}>;
