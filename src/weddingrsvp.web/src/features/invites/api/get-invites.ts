@@ -7,7 +7,7 @@ export const getInvites = (
   eventId: string,
   pageNumber = 1
 ): Promise<PagedResponse<Invite>> => {
-  return api.get(`/api/events/${eventId}`, {
+  return api.get(`/api/events/${eventId}/invites`, {
     params: {
       pageNumber,
     },
