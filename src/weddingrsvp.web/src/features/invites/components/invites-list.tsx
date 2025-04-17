@@ -47,8 +47,7 @@ export const InvitesList = ({ eventId }: InvitesListProps) => {
         </Link>
       </Table.Td>
       <Table.Td>
-        <Button>Delete TODO</Button>
-        {/* <DeleteInvite id={invite.id} /> */}
+        <DeleteInvite inviteId={invite.id} eventId={invite.eventId} />
       </Table.Td>
     </Table.Tr>
   ));
