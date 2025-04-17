@@ -7,6 +7,8 @@ import { Link } from "@/components/ui/link";
 import { paths } from "@/configs/paths";
 import DeleteFood from "./delete-food";
 import { getFoodQueryOptions } from "../api/get-food";
+import { useState } from "react";
+import { number } from "zod";
 
 export type FoodsListProps = {
   eventId: string;
@@ -16,9 +18,12 @@ export const FoodsList = ({ eventId }: FoodsListProps) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  const [pageNumber, setPageNumber] = useState<number>(1);
+
   const foodsQuery = useFoods({
     eventId: eventId,
-    pageNumber: +(searchParams.get("foodsPage") || 1),
+    // pageNumber: +(searchParams.get("foodsPage") || 1),
+    pageNumber: pageNumber,
   });
 
   const queryClient = useQueryClient();
@@ -27,7 +32,7 @@ export const FoodsList = ({ eventId }: FoodsListProps) => {
     return <LoadingPage />;
   }
 
-  const pageNumber = foodsQuery.data?.pageNumber ?? 1;
+  //const pageNumber = foodsQuery.data?.pageNumber ?? 1;
   const totalPages = foodsQuery.data?.totalPages ?? 1;
   const foods = foodsQuery.data?.items;
 
@@ -54,8 +59,9 @@ export const FoodsList = ({ eventId }: FoodsListProps) => {
   ));
 
   function navigateToPage(value: number): void {
-    const href = `${paths.app.event.getHref(eventId)}?foodsPage=${value}`;
-    navigate(href);
+    setPageNumber(value);
+    //const href = `${paths.app.event.getHref(eventId)}?foodsPage=${value}`;
+    //navigate(href);
   }
 
   return (
