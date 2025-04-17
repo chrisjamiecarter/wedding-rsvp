@@ -5,8 +5,8 @@ import { LoadingPage } from "@/components/ui/loading-page";
 import { Button, Group, Pagination, Table } from "@mantine/core";
 import { Link } from "@/components/ui/link";
 import { paths } from "@/configs/paths";
-import DeleteFood from "./delete-food";
 import { getFoodQueryOptions } from "../api/get-food";
+import DeleteFood from "./delete-food";
 
 export type FoodsListProps = {
   eventId: string;
@@ -47,8 +47,7 @@ export const FoodsList = ({ eventId }: FoodsListProps) => {
         </Link>
       </Table.Td>
       <Table.Td>
-        <Button>Delete TODO</Button>
-        {/* <DeleteFood id={food.id} /> */}
+        <DeleteFood foodId={food.id} eventId={food.eventId} />
       </Table.Td>
     </Table.Tr>
   ));
