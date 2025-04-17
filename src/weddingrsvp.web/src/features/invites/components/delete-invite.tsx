@@ -2,20 +2,22 @@ import { Button } from "@mantine/core";
 
 import { ConfirmationDialog } from "@/components/ui/dialog/confirmation-dialog";
 
-import { useDeleteEvent } from "../api/delete-event";
+import { useDeleteInvite } from "../api/delete-invite";
 import CustomNotifications from "@/components/ui/notifications/notifications";
 import { Trash } from "lucide-react";
 
-type DeleteEventProps = {
-  id: string;
+type DeleteInviteProps = {
+  inviteId: string;
+  eventId: string;
 };
 
-const DeleteEvent = ({ id }: DeleteEventProps) => {
-  const deleteEventMutation = useDeleteEvent({
+const DeleteInvite = ({ inviteId, eventId }: DeleteInviteProps) => {
+  const deleteInviteMutation = useDeleteInvite({
+    eventId,
     mutationConfig: {
       onSuccess: () => {
         CustomNotifications.success({
-          title: "Event Deleted",
+          title: "Invite Deleted",
           message: "",
         });
       },
@@ -25,15 +27,15 @@ const DeleteEvent = ({ id }: DeleteEventProps) => {
   return (
     <ConfirmationDialog
       type="danger"
-      title="Delete Event"
-      body="Are you sure you want to delete this event?"
-      isDone={deleteEventMutation.isSuccess}
+      title="Delete Invite"
+      body="Are you sure you want to delete this invite?"
+      isDone={deleteInviteMutation.isSuccess}
       confirmButton={
         <Button
-          loading={deleteEventMutation.isPending}
+          loading={deleteInviteMutation.isPending}
           type="button"
           color="red"
-          onClick={() => deleteEventMutation.mutate({ eventId: id })}>
+          onClick={() => deleteInviteMutation.mutate({ inviteId })}>
           Delete
         </Button>
       }
@@ -42,4 +44,4 @@ const DeleteEvent = ({ id }: DeleteEventProps) => {
   );
 };
 
-export default DeleteEvent;
+export default DeleteInvite;
