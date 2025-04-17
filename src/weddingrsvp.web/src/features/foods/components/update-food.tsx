@@ -95,6 +95,7 @@ export const UpdateFood = ({ foodId }: UpdateFoodProps) => {
               label="Food Type"
               key={form.key("foodType")}
               {...form.getInputProps("foodType")}
+              required
               mt="md">
               {form.getValues().foodType || (
                 <Input.Placeholder>Select Food Type</Input.Placeholder>

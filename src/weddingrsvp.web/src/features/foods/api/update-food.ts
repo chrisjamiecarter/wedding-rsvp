@@ -6,6 +6,7 @@ import { MutationConfig } from "@/lib/react-query";
 import { Food, FoodTypes } from "@/types/api";
 
 import { getFoodQueryOptions } from "./get-food";
+import { getFoodsQueryOptions } from "./get-foods";
 
 export const updateFoodInputSchema = z.object({
   eventId: z.string().min(1, "Required"),
@@ -39,6 +40,9 @@ export const useUpdateFood = ({
 
   return useMutation({
     onSuccess: (data, ...args) => {
+      queryClient.invalidateQueries({
+        queryKey: getFoodsQueryOptions({ eventId: data.eventId }).queryKey,
+      });
       queryClient.refetchQueries({
         queryKey: getFoodQueryOptions(data.id).queryKey,
       });
