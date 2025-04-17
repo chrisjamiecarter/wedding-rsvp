@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { AppShell, Burger, Group, NavLink } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Calendar, House, Mail, Utensils, Ticket } from "lucide-react";
+import { Calendar, House } from "lucide-react";
 
 import { paths } from "@/configs/paths";
 
@@ -15,13 +15,6 @@ const navData = [
     link: paths.app.events.getHref(),
     label: "Events",
     icon: Calendar,
-  },
-  { link: paths.app.invites.getHref(), label: "Invites", icon: Mail },
-  { link: paths.app.guests.getHref(), label: "Guests", icon: Ticket },
-  {
-    link: paths.app.foods.getHref(),
-    label: "Food Options",
-    icon: Utensils,
   },
 ];
 
