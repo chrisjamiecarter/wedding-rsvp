@@ -56,18 +56,19 @@ export const CreateInvite = ({ eventId }: CreateInviteProps) => {
           createInviteMutation.mutate({ data: data });
         })}>
         <TextInput
+          label="Household"
+          placeholder="Example Household"
+          key={form.key("householdName")}
+          {...form.getInputProps("householdName")}
+          required
+          mt="md"
+        />
+        <TextInput
           label="Email"
           placeholder="email@example.com"
           key={form.key("email")}
           {...form.getInputProps("email")}
           required
-          mt="md"
-        />
-        <TextInput
-          label="Household Name"
-          placeholder="Example Household Name"
-          key={form.key("householdName")}
-          {...form.getInputProps("householdName")}
           mt="md"
         />
       </form>

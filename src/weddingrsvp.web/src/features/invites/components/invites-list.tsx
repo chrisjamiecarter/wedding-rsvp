@@ -35,8 +35,8 @@ export const InvitesList = ({ eventId }: InvitesListProps) => {
 
   const rows = invites.map((invite) => (
     <Table.Tr key={invite.id}>
-      <Table.Td>{invite.email}</Table.Td>
       <Table.Td>{invite.householdName}</Table.Td>
+      <Table.Td>{invite.email}</Table.Td>
       <Table.Td>
         <Link
           onMouseEnter={() => {
@@ -63,8 +63,8 @@ export const InvitesList = ({ eventId }: InvitesListProps) => {
       <Table highlightOnHover>
         <Table.Thead>
           <Table.Tr>
+            <Table.Th>Household</Table.Th>
             <Table.Th>Email</Table.Th>
-            <Table.Th>Household Name</Table.Th>
             <Table.Th></Table.Th>
             <Table.Th></Table.Th>
           </Table.Tr>

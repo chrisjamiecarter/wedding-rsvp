@@ -6,6 +6,7 @@ import { MutationConfig } from "@/lib/react-query";
 import { Invite } from "@/types/api";
 
 import { getInviteQueryOptions } from "./get-invite";
+import { getInvitesQueryOptions } from "./get-invites";
 
 export const updateInviteInputSchema = z.object({
   eventId: z.string().min(1, "Required"),
@@ -39,6 +40,9 @@ export const useUpdateInvite = ({
 
   return useMutation({
     onSuccess: (data, ...args) => {
+      queryClient.invalidateQueries({
+        queryKey: getInvitesQueryOptions({ eventId: data.eventId }).queryKey,
+      });
       queryClient.refetchQueries({
         queryKey: getInviteQueryOptions(data.id).queryKey,
       });
