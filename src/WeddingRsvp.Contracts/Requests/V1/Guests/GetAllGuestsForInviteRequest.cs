@@ -3,6 +3,6 @@
 public sealed class GetAllGuestsForInviteRequest : PagedRequest
 {
     public string? Name { get; init; }
-    public string? RvspStatus { get; init; }
+    public string? RsvpStatus { get; init; }
     public string? SortBy { get; init; }
 }

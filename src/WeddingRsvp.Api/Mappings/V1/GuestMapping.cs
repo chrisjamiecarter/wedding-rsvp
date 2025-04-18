@@ -71,13 +71,13 @@ public static class GuestMapping
 
     public static GetAllGuestsForEventOptions ToOptions(this GetAllGuestsForEventRequest request, Guid eventId)
     {
-        Enum.TryParse<RsvpStatus>(request.RvspStatus, true, out var rsvpStatus);
+        Enum.TryParse<RsvpStatus>(request.RsvpStatus, true, out var rsvpStatus);
 
         return new GetAllGuestsForEventOptions
         {
             EventId = eventId,
             Name = request.Name,
-            RsvpStatus = request.RvspStatus is null
+            RsvpStatus = request.RsvpStatus is null
                 ? null
                 : rsvpStatus,
             HouseholdName = request.HouseholdName,
@@ -94,13 +94,13 @@ public static class GuestMapping
 
     public static GetAllGuestsForInviteOptions ToOptions(this GetAllGuestsForInviteRequest request, Guid inviteId)
     {
-        Enum.TryParse<RsvpStatus>(request.RvspStatus, true, out var rsvpStatus);
+        Enum.TryParse<RsvpStatus>(request.RsvpStatus, true, out var rsvpStatus);
 
         return new GetAllGuestsForInviteOptions
         {
             InviteId = inviteId,
             Name = request.Name,
-            RsvpStatus = request.RvspStatus is null
+            RsvpStatus = request.RsvpStatus is null
                 ? null
                 : rsvpStatus,
             SortField = request.SortBy?.TrimStart('-'),

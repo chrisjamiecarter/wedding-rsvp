@@ -2,7 +2,7 @@
 
 public sealed record GuestDetailResponse(Guid Id,
                                          string Name,
-                                         string RvspStatus,
+                                         string RsvpStatus,
                                          Guid InviteId,
                                          string InviteHouseholdName,
                                          Guid? MainFoodOptionId,

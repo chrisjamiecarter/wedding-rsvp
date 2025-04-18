@@ -84,7 +84,7 @@ internal class GuestService : IGuestService
             query = options.SortField switch
             {
                 "name" => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.Name).ThenBy(g => g.Id) : query.OrderByDescending(g => g.Name).ThenByDescending(g => g.Id),
-                "rvsp" => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.RsvpStatus).ThenBy(g => g.Id) : query.OrderByDescending(g => g.RsvpStatus).ThenByDescending(g => g.Id),
+                "rsvp" => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.RsvpStatus).ThenBy(g => g.Id) : query.OrderByDescending(g => g.RsvpStatus).ThenByDescending(g => g.Id),
                 "household" => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.Invite!.HouseholdName).ThenBy(g => g.Id) : query.OrderByDescending(g => g.Invite!.HouseholdName).ThenByDescending(g => g.Id),
                 "main" => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.MainFoodOption!.Name).ThenBy(g => g.Id) : query.OrderByDescending(g => g.MainFoodOption!.Name).ThenByDescending(g => g.Id),
                 "dessert" => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.DessertFoodOption!.Name).ThenBy(g => g.Id) : query.OrderByDescending(g => g.DessertFoodOption!.Name).ThenByDescending(g => g.Id),
@@ -121,7 +121,7 @@ internal class GuestService : IGuestService
             query = options.SortField switch
             {
                 "name" => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.Name).ThenBy(g => g.Id) : query.OrderByDescending(g => g.Name).ThenByDescending(g => g.Id),
-                "rvsp" => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.RsvpStatus).ThenBy(g => g.Id) : query.OrderByDescending(g => g.RsvpStatus).ThenByDescending(g => g.Id),
+                "rsvp" => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.RsvpStatus).ThenBy(g => g.Id) : query.OrderByDescending(g => g.RsvpStatus).ThenByDescending(g => g.Id),
                 "main" => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.MainFoodOption!.Name).ThenBy(g => g.Id) : query.OrderByDescending(g => g.MainFoodOption!.Name).ThenByDescending(g => g.Id),
                 "dessert" => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.DessertFoodOption!.Name).ThenBy(g => g.Id) : query.OrderByDescending(g => g.DessertFoodOption!.Name).ThenByDescending(g => g.Id),
                 _ => options.SortOrder == SortOrder.Ascending ? query.OrderBy(g => g.Id) : query.OrderByDescending(g => g.Id),
