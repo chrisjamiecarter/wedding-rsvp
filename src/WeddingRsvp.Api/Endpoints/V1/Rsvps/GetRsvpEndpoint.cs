@@ -15,11 +15,16 @@ public static class GetRsvpEndpoint
     {
         app.MapGet(Routes.Rsvps.Get,
             async (Guid inviteId,
-                   [FromBody] GetRsvpRequest request,
+                   [AsParameters] GetRsvpRequest request,
                    IRsvpService rsvpService,
                    CancellationToken cancellationToken) =>
             {
-                var invite = await rsvpService.GetAsync(inviteId, request.Token, cancellationToken);
+                if (request.Token is null)
+                {
+                    return Results.BadRequest("Token is a required query parameter");
+                }
+
+                var invite = await rsvpService.GetAsync(inviteId, request.Token.Value, cancellationToken);
                 if (invite is null)
                 {
                     return Results.NotFound();
@@ -35,7 +40,7 @@ public static class GetRsvpEndpoint
                     return Results.Forbid();
                 }
 
-                var guests = await rsvpService.GetGuestsAsync(invite.Id, request.Token, cancellationToken);
+                var guests = await rsvpService.GetGuestsAsync(invite.Id, request.Token.Value, cancellationToken);
 
                 return TypedResults.Ok(invite.ToGetRsvpResponse(guests));
             })
