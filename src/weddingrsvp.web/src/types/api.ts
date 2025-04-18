@@ -47,3 +47,22 @@ export type Food = Entity<{
 }>;
 
 export const FoodTypes = ["Main", "Dessert"] as const;
+
+export type Guest = Entity<{
+  inviteId: string;
+  name: string;
+  rsvpStatus: string;
+  mainFoodOptionId: string | null;
+  dessertFoodOptionId: string | null;
+}>;
+
+export type GuestDetail = Entity<{
+  inviteId: string;
+  inviteHouseholdName: string;
+  name: string;
+  rsvpStatus: string;
+  mainFoodOptionId: string | null;
+  mainFoodOptionName: string | null;
+  dessertFoodOptionId: string | null;
+  dessertFoodOptionName: string | null;
+}>;
