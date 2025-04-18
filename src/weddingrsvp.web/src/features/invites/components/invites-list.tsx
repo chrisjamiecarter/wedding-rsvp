@@ -62,10 +62,10 @@ export const InvitesList = ({ eventId }: InvitesListProps) => {
       <Table highlightOnHover>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Household</Table.Th>
-            <Table.Th>Email</Table.Th>
-            <Table.Th></Table.Th>
-            <Table.Th></Table.Th>
+            <Table.Th w="50%">Household</Table.Th>
+            <Table.Th w="50%">Email</Table.Th>
+            <Table.Th w="1rem"></Table.Th>
+            <Table.Th w="1rem"></Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

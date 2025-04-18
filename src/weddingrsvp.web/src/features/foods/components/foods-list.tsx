@@ -65,10 +65,10 @@ export const FoodsList = ({ eventId }: FoodsListProps) => {
       <Table highlightOnHover>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Name</Table.Th>
-            <Table.Th>Food Type</Table.Th>
-            <Table.Th></Table.Th>
-            <Table.Th></Table.Th>
+            <Table.Th w="50%">Name</Table.Th>
+            <Table.Th w="50%">Food Type</Table.Th>
+            <Table.Th w="1rem"></Table.Th>
+            <Table.Th w="1rem"></Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
