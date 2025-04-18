@@ -108,4 +108,4 @@ This is a modern wedding invitation and RSVP management system built with .NET 9
 - Views RSVP list & food preferences.
 - Can manually add or update invitees (triggers an email to the invitee).
 
-![wedding-rvsp-workflow](./_resources/wedding-rsvp-workflow.png)
+![wedding-rsvp-workflow](./_resources/wedding-rsvp-workflow.png)
