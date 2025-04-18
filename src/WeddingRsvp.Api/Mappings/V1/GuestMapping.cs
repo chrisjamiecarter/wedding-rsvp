@@ -16,6 +16,7 @@ public static class GuestMapping
             Id = Guid.CreateVersion7(),
             Name = request.Name,
             InviteId = inviteId,
+            RsvpStatus = RsvpStatus.AwaitingResponse,
         };
     }
 
