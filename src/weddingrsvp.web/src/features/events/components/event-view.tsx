@@ -4,12 +4,7 @@ import { useEvent } from "@/features/events/api/get-event";
 import { Button, Collapse, Group, Table } from "@mantine/core";
 import { UpdateEvent } from "./update-event";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  PanelBottomClose,
-  PanelBottomOpen,
-  PanelTopClose,
-  PanelTopOpen,
-} from "lucide-react";
+import { PanelTopClose, PanelTopOpen } from "lucide-react";
 
 const EventView = ({ eventId }: { eventId: string }) => {
   const [opened, { toggle }] = useDisclosure(true);
@@ -28,7 +23,7 @@ const EventView = ({ eventId }: { eventId: string }) => {
 
   return (
     <>
-      <Group justify="space-between">
+      <Group justify="end">
         <Button onClick={toggle} variant="transparent" color="dark">
           {opened ? <PanelTopClose /> : <PanelTopOpen />}
         </Button>
