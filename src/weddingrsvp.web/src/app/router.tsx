@@ -54,29 +54,14 @@ const createAppRouter = (queryClient: QueryClient) => {
             import("./routes/app/events/event").then(convert(queryClient)),
         },
         {
-          path: paths.app.invites.path,
-          lazy: () =>
-            import("./routes/app/invites/invites").then(convert(queryClient)),
-        },
-        {
           path: paths.app.invite.path,
           lazy: () =>
             import("./routes/app/invites/invite").then(convert(queryClient)),
         },
         {
-          path: paths.app.guests.path,
-          lazy: () =>
-            import("./routes/app/guests/guests").then(convert(queryClient)),
-        },
-        {
           path: paths.app.guest.path,
           lazy: () =>
             import("./routes/app/guests/guest").then(convert(queryClient)),
-        },
-        {
-          path: paths.app.foods.path,
-          lazy: () =>
-            import("./routes/app/foods/foods").then(convert(queryClient)),
         },
         {
           path: paths.app.food.path,

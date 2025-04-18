@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router";
 
 import { paths } from "@/configs/paths";
-import { Anchor, Button, Group } from "@mantine/core";
+import { Button, Group } from "@mantine/core";
 import { useUser } from "@/lib/auth";
 import LandingLayout from "@/components/layouts/landing-layout";
-import { Github } from "lucide-react";
 
 const LandingRoute = () => {
   const navigate = useNavigate();

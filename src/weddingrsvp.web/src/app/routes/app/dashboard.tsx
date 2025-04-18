@@ -1,7 +1,4 @@
-import CustomNotifications from "@/components/ui/notifications/notifications";
 import { useUser } from "@/lib/auth";
-import { Button } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
 
 const DashboardRoute = () => {
   const user = useUser();
