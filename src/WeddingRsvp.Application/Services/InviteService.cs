@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using WeddingRsvp.Application.Database;
 using WeddingRsvp.Application.Entities;
-using WeddingRsvp.Application.Models;
 
 namespace WeddingRsvp.Application.Services;
 
@@ -10,13 +9,11 @@ internal class InviteService : IInviteService
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly IValidator<Invite> _inviteValidator;
-    private readonly IValidator<InviteRsvp> _inviteRsvpValidator;
 
-    public InviteService(ApplicationDbContext dbContext, IValidator<Invite> inviteValidator, IValidator<InviteRsvp> inviteRsvpValidator)
+    public InviteService(ApplicationDbContext dbContext, IValidator<Invite> inviteValidator)
     {
         _dbContext = dbContext;
         _inviteValidator = inviteValidator;
-        _inviteRsvpValidator = inviteRsvpValidator;
     }
 
     public async Task<bool> CreateAsync(Invite invite, CancellationToken cancellationToken = default)
@@ -53,7 +50,7 @@ internal class InviteService : IInviteService
             return null;
         }
 
-        invite.UniqueLinkToken = Guid.NewGuid();
+        invite.Token = Guid.NewGuid();
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
@@ -68,55 +65,6 @@ internal class InviteService : IInviteService
     public async Task<Invite?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _dbContext.Invites.SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
-    }
-
-    public async Task<Invite?> SubmitRsvp(InviteRsvp inviteRsvp, CancellationToken cancellationToken = default)
-    {
-        await _inviteRsvpValidator.ValidateAndThrowAsync(inviteRsvp, cancellationToken);
-
-        using var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
-
-        try
-        {
-            var invite = await _dbContext.Invites.Include(i => i.Guests).SingleOrDefaultAsync(i => i.Id == inviteRsvp.Id && i.UniqueLinkToken == inviteRsvp.Token, cancellationToken);
-            if (invite == null)
-            {
-                throw new InvalidOperationException($"Invalid invite token");
-            }
-
-            var validGuestIds = invite.Guests!.Select(g => g.Id).ToHashSet();
-            foreach (var guestRsvp in inviteRsvp.Guests)
-            {
-                if (!validGuestIds.Contains(guestRsvp.Id))
-                {
-                    throw new InvalidOperationException($"No guest found for id: {guestRsvp.Id}");
-                }
-            }
-
-            foreach (var guestRsvp in inviteRsvp.Guests)
-            {
-                var guest = await _dbContext.Guests.FindAsync([guestRsvp.Id], cancellationToken);
-                if (guest != null)
-                {
-                    guest.RsvpStatus = guestRsvp.RsvpStatus;
-                    guest.MainFoodOptionId = guestRsvp.MainFoodOptionId;
-                    guest.DessertFoodOptionId = guestRsvp.DessertFoodOptionId;
-                }
-            }
-
-            invite.UniqueLinkToken = null;
-
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
-            await transaction.CommitAsync(cancellationToken);
-
-            return invite;
-        }
-        catch
-        {
-            await transaction.RollbackAsync(cancellationToken);
-            return null;
-        }
     }
 
     public async Task<Invite?> UpdateAsync(Invite invite, CancellationToken cancellationToken = default)

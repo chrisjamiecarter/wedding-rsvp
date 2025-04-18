@@ -1,6 +1,6 @@
 ﻿using WeddingRsvp.Application.Enums;
 using WeddingRsvp.Application.Models;
-using WeddingRsvp.Contracts.Requests.V1.Invites;
+using WeddingRsvp.Contracts.Requests.V1.Rsvps;
 
 namespace WeddingRsvp.Api.Mappings.V1;
 

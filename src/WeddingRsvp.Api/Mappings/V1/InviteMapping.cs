@@ -13,7 +13,7 @@ public static class InviteMapping
             Id = Guid.CreateVersion7(),
             Email = request.Email,
             HouseholdName = request.HouseholdName,
-            UniqueLinkToken = Guid.NewGuid(),
+            Token = Guid.NewGuid(),
             EventId = eventId,
         };
     }
@@ -25,7 +25,7 @@ public static class InviteMapping
             Id = existingEntity.Id,
             Email = request.Email,
             HouseholdName = request.HouseholdName,
-            UniqueLinkToken = existingEntity.UniqueLinkToken,
+            Token = existingEntity.Token,
             EventId = existingEntity.EventId,
         };
     }
@@ -35,37 +35,12 @@ public static class InviteMapping
         return new InviteResponse(entity.Id,
                                   entity.Email,
                                   entity.HouseholdName,
-                                  entity.UniqueLinkToken,
+                                  entity.Token,
                                   entity.EventId);
     }
 
     public static InvitesResponse ToResponse(this IEnumerable<Invite> entities)
     {
         return new InvitesResponse(entities.Select(ToResponse));
-    }
-
-    public static GuestRsvpResponse ToRsvpResponse(this Guest entity)
-    {
-        return new GuestRsvpResponse(entity.Id,
-                                     entity.Name,
-                                     entity.RsvpStatus.ToString(),
-                                     entity.MainFoodOptionId,
-                                     entity.MainFoodOption?.Name,
-                                     entity.DessertFoodOptionId,
-                                     entity.DessertFoodOption?.Name);
-    }
-
-    public static IEnumerable<GuestRsvpResponse> ToRsvpResponse(this IEnumerable<Guest> entities)
-    {
-        return entities.Select(ToRsvpResponse);
-    }
-
-    public static SubmitRsvpResponse ToRsvpResponse(this Invite entity)
-    {
-        return new SubmitRsvpResponse(entity.Id,
-                                      entity.Email,
-                                      entity.HouseholdName,
-                                      entity.EventId,
-                                      entity.Guests!.ToRsvpResponse());
     }
 }

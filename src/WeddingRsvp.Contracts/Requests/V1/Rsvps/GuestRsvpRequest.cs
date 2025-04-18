@@ -1,4 +1,4 @@
-﻿namespace WeddingRsvp.Contracts.Requests.V1.Invites;
+﻿namespace WeddingRsvp.Contracts.Requests.V1.Rsvps;
 
 public sealed record GuestRsvpRequest(Guid GuestId,
                                       string RsvpStatus,

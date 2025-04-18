@@ -102,6 +102,12 @@ public static class AssemblyInstaller
                       .Expire(Policies.Invite.Expiration)
                       .Tag(Policies.Invite.Tag);
             });
+            options.AddPolicy(Policies.Rsvp.Name, policy =>
+            {
+                policy.Cache()
+                      .Expire(Policies.Rsvp.Expiration)
+                      .Tag(Policies.Rsvp.Tag);
+            });
         });
 
         services.AddScoped<IAuthService, AuthService>();
@@ -109,6 +115,7 @@ public static class AssemblyInstaller
         services.AddScoped<IFoodOptionService, FoodOptionService>();
         services.AddScoped<IGuestService, GuestService>();
         services.AddScoped<IInviteService, InviteService>();
+        services.AddScoped<IRsvpService, RsvpService>();
 
         services.Configure<SeederOptions>(configuration.GetSection(nameof(SeederOptions)));
         services.AddScoped<SeederService>();

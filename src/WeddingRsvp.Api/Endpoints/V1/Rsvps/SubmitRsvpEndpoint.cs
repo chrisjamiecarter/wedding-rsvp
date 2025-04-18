@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.OutputCaching;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using WeddingRsvp.Api.Mappings.V1;
-using WeddingRsvp.Application.Auth;
 using WeddingRsvp.Application.Cache;
 using WeddingRsvp.Application.Services;
-using WeddingRsvp.Contracts.Requests.V1.Invites;
+using WeddingRsvp.Contracts.Requests.V1.Rsvps;
 using WeddingRsvp.Contracts.Responses;
-using WeddingRsvp.Contracts.Responses.V1.Invites;
 
-namespace WeddingRsvp.Api.Endpoints.V1.Invites;
+namespace WeddingRsvp.Api.Endpoints.V1.Rsvps;
 
 public static class SubmitRsvpEndpoint
 {
@@ -15,39 +14,37 @@ public static class SubmitRsvpEndpoint
 
     public static IEndpointRouteBuilder MapSubmitRsvp(this IEndpointRouteBuilder app)
     {
-        app.MapPost(Routes.Invites.SubmitRsvp,
-            async (Guid id,
-                   SubmitRsvpRequest request,
-                   IInviteService inviteService,
+        app.MapPost(Routes.Rsvps.Submit,
+            async (Guid inviteId,
+                   [FromBody] SubmitRsvpRequest request,
+                   IRsvpService rsvpService,
                    IOutputCacheStore outputCacheStore,
                    CancellationToken cancellationToken) =>
             {
-                var invite = await inviteService.GetByIdAsync(id, cancellationToken);
+                var invite = await rsvpService.GetAsync(inviteId, request.Token, cancellationToken);
                 if (invite is null)
                 {
                     return Results.NotFound();
                 }
 
-                var inviteRsvp = request.ToModel(id);
+                var inviteRsvp = request.ToModel(inviteId);
 
-                var updatedInvite = await inviteService.SubmitRsvp(inviteRsvp, cancellationToken);
-                if (updatedInvite == null)
+                var result = await rsvpService.SubmitAsync(inviteRsvp, cancellationToken);
+                if (result.IsFailure)
                 {
-                    return Results.NotFound();
+                    return Results.BadRequest(result.Error);
                 }
 
                 await outputCacheStore.EvictByTagAsync(Policies.Invite.Tag, cancellationToken);
                 await outputCacheStore.EvictByTagAsync(Policies.Guest.Tag, cancellationToken);
+                await outputCacheStore.EvictByTagAsync(Policies.Rsvp.Tag, cancellationToken);
 
-                var response = updatedInvite.ToRsvpResponse();
-                return TypedResults.Ok(response);
+                return Results.NoContent();
             })
             .WithName(Name)
-            .Produces<SubmitRsvpResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status204NoContent)
             .Produces<ValidationFailureResponse>(StatusCodes.Status400BadRequest)
-            .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status404NotFound)
-            .RequireAuthorization(AuthConstants.AdminPolicyName)
             .WithApiVersionSet(ApiVersioning.ApiVersionSet!)
             .HasApiVersion(1.0);
 

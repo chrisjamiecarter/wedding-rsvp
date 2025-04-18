@@ -29,6 +29,6 @@ public sealed class InviteRsvpValidator : AbstractValidator<InviteRsvp>
 
     private async Task<bool> ValidateTokenAsync(InviteRsvp inviteRsvp, Guid token, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Invites.AnyAsync(i => i.Id == inviteRsvp.Id && i.UniqueLinkToken == token, cancellationToken);
+        return await _dbContext.Invites.AnyAsync(i => i.Id == inviteRsvp.Id && i.Token == token, cancellationToken);
     }
 }

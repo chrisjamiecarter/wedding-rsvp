@@ -55,7 +55,6 @@ public static class Routes
         public const string Delete = $"{Base}/{{id:guid}}";
         public const string GenerateToken = $"{Base}/{{id:guid}}/GenerateToken";
         public const string Get = $"{Base}/{{id:guid}}";
-        public const string SubmitRsvp = $"{Base}/{{id:guid}}/rsvp";
         public const string Update = $"{Base}/{{id:guid}}";
 
         private const string GuestsBase = $"{Base}/{{inviteId:guid}}/guests";
@@ -71,5 +70,13 @@ public static class Routes
         public const string Delete = $"{Base}/{{id:guid}}";
         public const string Get = $"{Base}/{{id:guid}}";
         public const string Update = $"{Base}/{{id:guid}}";
+    }
+
+    public static class Rsvps
+    {
+        private const string Base = $"{ApiBase}/rsvps";
+
+        public const string Get = $"{Base}/{{inviteId:guid}}";
+        public const string Submit = $"{Base}/{{inviteId:guid}}";
     }
 }

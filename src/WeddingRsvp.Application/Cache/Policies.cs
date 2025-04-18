@@ -7,7 +7,7 @@ public static class Policies
         public const string Name = "EventCache";
         public const string Tag = "events";
         
-        public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(1);
+        public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(5);
     }
 
     public static class FoodOption
@@ -15,7 +15,7 @@ public static class Policies
         public const string Name = "FoodOptionCache";
         public const string Tag = "foodoptions";
 
-        public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(1);
+        public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(5);
     }
 
     public static class Guest
@@ -23,7 +23,7 @@ public static class Policies
         public const string Name = "GuestCache";
         public const string Tag = "guests";
 
-        public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(1);
+        public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(5);
     }
 
     public static class Invite
@@ -31,6 +31,14 @@ public static class Policies
         public const string Name = "InviteCache";
         public const string Tag = "invites";
 
-        public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(1);
+        public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(5);
+    }
+
+    public static class Rsvp
+    {
+        public const string Name = "RsvpCache";
+        public const string Tag = "rsvps";
+
+        public static readonly TimeSpan Expiration = TimeSpan.FromMinutes(5);
     }
 }

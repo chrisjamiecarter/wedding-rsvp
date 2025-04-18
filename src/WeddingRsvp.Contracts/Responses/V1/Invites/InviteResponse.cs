@@ -3,5 +3,5 @@
 public sealed record InviteResponse(Guid Id,
                                     string Email,
                                     string HouseholdName,
-                                    Guid? UniqueLinkToken,
+                                    Guid? Token,
                                     Guid EventId);
