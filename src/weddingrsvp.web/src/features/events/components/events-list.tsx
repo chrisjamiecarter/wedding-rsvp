@@ -57,7 +57,8 @@ export const EventsList = ({ onEventPrefetch }: EventsListProps) => {
   ));
 
   function navigateToPage(value: number): void {
-    const href = `${paths.app.events.getHref()}?page=${value}`;
+    searchParams.set("page", value.toString());
+    const href = `${paths.app.events.getHref()}?${searchParams.toString()}`;
     navigate(href);
   }
 

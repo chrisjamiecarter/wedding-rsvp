@@ -1,4 +1,9 @@
-import { LoaderFunctionArgs, useParams } from "react-router";
+import {
+  LoaderFunctionArgs,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { Mail, Utensils } from "lucide-react";
@@ -15,6 +20,7 @@ import Invites from "@/features/invites/components/invites";
 import Foods from "@/features/foods/components/foods";
 import { QueryClient } from "@tanstack/react-query";
 import { getInvitesQueryOptions } from "@/features/invites/api/get-invites";
+import { paths } from "@/configs/paths";
 
 export const clientLoader =
   (queryClient: QueryClient) =>
@@ -40,9 +46,24 @@ export const clientLoader =
   };
 
 const EventRoute = () => {
+  const navigate = useNavigate();
+
   const params = useParams();
   const eventId = params.eventId as string;
   const eventQuery = useEvent({ eventId });
+
+  const [searchParams] = useSearchParams();
+  const defaultTab = "invites";
+  const activeTab = searchParams.get("tab") || defaultTab;
+
+  const handleTabChanged = (value: string | null) => {
+    const newTab = value ? value : defaultTab;
+    searchParams.set("tab", newTab);
+    const href = `${paths.app.event.getHref(
+      eventId
+    )}?${searchParams.toString()}`;
+    navigate(href);
+  };
 
   if (eventQuery.isLoading) {
     return <LoadingPage />;
@@ -56,7 +77,7 @@ const EventRoute = () => {
     <ContentLayout title={event.name}>
       <EventView eventId={eventId} />
       <Space h="xl" />
-      <Tabs defaultValue="invites">
+      <Tabs value={activeTab} onChange={(value) => handleTabChanged(value)}>
         <Tabs.List grow>
           <Tabs.Tab value="invites" leftSection={<Mail />}>
             Invites

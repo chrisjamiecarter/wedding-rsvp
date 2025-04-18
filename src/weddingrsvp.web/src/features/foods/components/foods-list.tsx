@@ -53,7 +53,10 @@ export const FoodsList = ({ eventId }: FoodsListProps) => {
   ));
 
   function navigateToPage(value: number): void {
-    const href = `${paths.app.event.getHref(eventId)}?foodsPage=${value}`;
+    searchParams.set("foodsPage", value.toString());
+    const href = `${paths.app.event.getHref(
+      eventId
+    )}?${searchParams.toString()}`;
     navigate(href);
   }
 
