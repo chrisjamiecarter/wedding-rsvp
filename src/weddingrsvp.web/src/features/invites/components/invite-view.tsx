@@ -48,6 +48,11 @@ const InviteView = ({ inviteId }: { inviteId: string }) => {
               <Table.Th>Email</Table.Th>
               <Table.Td>{invite.email}</Table.Td>
             </Table.Tr>
+
+            <Table.Tr>
+              <Table.Th>Token</Table.Th>
+              <Table.Td>{invite.token}</Table.Td>
+            </Table.Tr>
           </Table.Tbody>
         </Table>
       </Collapse>
