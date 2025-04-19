@@ -3,6 +3,10 @@ export const paths = {
     path: "/",
     getHref: () => "/",
   },
+  rsvp: {
+    path: "/rsvp",
+    getHref: () => "/rsvp",
+  },
   auth: {
     signin: {
       path: "/auth/signin",

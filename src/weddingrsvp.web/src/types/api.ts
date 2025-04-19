@@ -37,7 +37,7 @@ export type Invite = Entity<{
   eventId: string;
   email: string;
   householdName: string;
-  uniqueLinkToken: string;
+  token: string;
 }>;
 
 export type Food = Entity<{
@@ -66,3 +66,13 @@ export type GuestDetail = Entity<{
   dessertFoodOptionId: string | null;
   dessertFoodOptionName: string | null;
 }>;
+
+export type InviteRsvp = {
+  token: string;
+  guests: GuestRsvp[];
+};
+
+export type GuestRsvp = {
+  guestId: string;
+  name: string;
+};

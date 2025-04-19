@@ -41,6 +41,15 @@ const LandingRoute = () => {
           }>
           Repository
         </Button>
+        <Button
+          variant="default"
+          onClick={() =>
+            navigate(
+              `${paths.rsvp.getHref()}?inviteId=01963b0a-f977-71f8-91c6-2f897a7816c5&token=ab76a9bb-0838-48aa-bb36-5a95a091ae3d`
+            )
+          }>
+          RSVP Test
+        </Button>
       </Group>
     </LandingLayout>
   );
