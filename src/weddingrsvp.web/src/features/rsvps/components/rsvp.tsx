@@ -3,10 +3,11 @@ import { useRsvp } from "../api/get-rsvp";
 import {
   Button,
   Card,
+  Center,
   Group,
+  NativeSelect,
   SimpleGrid,
   Text,
-  TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect } from "react";
@@ -56,18 +57,30 @@ const Rsvp = ({ inviteId, token }: { inviteId: string; token: string }) => {
 
   const fields = form.getValues().guests.map((item, index) => (
     <Card key={item.guestId} shadow="xs" p="lg" radius="md" withBorder>
-      <Text fw="bold">{item.name}</Text>
-      <TextInput
+      <Center>
+        <Text fw="bold">{item.name}</Text>
+      </Center>
+      <NativeSelect
+        mt="xs"
         label="Main"
+        data={[
+          { label: "Select Main", value: "", disabled: true },
+          { label: "Lamb Roast", value: "test-main-1" },
+          { label: "Chicken Roast", value: "test-main-2" },
+        ]}
         key={form.key(`guests.${index}.mainFoodOptionId`)}
         {...form.getInputProps(`guests.${index}.mainFoodOptionId`)}
-        mt="md"
       />
-      <TextInput
+      <NativeSelect
+        mt="xs"
         label="Dessert"
+        data={[
+          { label: "Select Dessert", value: "" },
+          { label: "Chocolate Cake", value: "test-dessert-1" },
+          { label: "Strawberry Cheesecake", value: "test-dessert-2" },
+        ]}
         key={form.key(`guests.${index}.dessertFoodOptionId`)}
         {...form.getInputProps(`guests.${index}.dessertFoodOptionId`)}
-        mt="md"
       />
     </Card>
   ));
