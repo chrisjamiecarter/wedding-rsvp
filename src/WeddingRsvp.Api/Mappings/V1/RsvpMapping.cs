@@ -5,24 +5,40 @@ namespace WeddingRsvp.Api.Mappings.V1;
 
 public static class RsvpMapping
 {
-    public static GetRsvpResponse ToGetRsvpResponse(this Invite entity, IEnumerable<Guest> entities)
+    public static GetRsvpResponse ToGetRsvpResponse(this Invite invite,
+                                                    IEnumerable<Guest> guests,
+                                                    IEnumerable<FoodOption> mains,
+                                                    IEnumerable<FoodOption> desserts)
     {
-        if (entity.Token is null)
+        if (invite.Token is null)
         {
             throw new InvalidOperationException("Invite RSVP must have a non-null token value.");
         }
-        return new GetRsvpResponse(entity.Token.Value,
-                                   entities.ToGuestRsvpResponse());
+        return new GetRsvpResponse(invite.Token.Value,
+                                   guests.ToGuestsRsvpResponse(),
+                                   mains.ToFoodOptionsRsvpResponse(),
+                                   desserts.ToFoodOptionsRsvpResponse());
     }
 
-    public static IEnumerable<GuestRsvpResponse> ToGuestRsvpResponse(this IEnumerable<Guest> entities)
+    public static IEnumerable<FoodOptionRsvpResponse> ToFoodOptionsRsvpResponse(this IEnumerable<FoodOption> foodOptions)
     {
-        return entities.Select(ToGuestRsvpResponse);
+        return foodOptions.Select(ToFoodOptionRsvpResponse);
     }
 
-    public static GuestRsvpResponse ToGuestRsvpResponse(this Guest entity)
+    public static IEnumerable<GuestRsvpResponse> ToGuestsRsvpResponse(this IEnumerable<Guest> guests)
     {
-        return new GuestRsvpResponse(entity.Id,
-                                     entity.Name);
+        return guests.Select(ToGuestRsvpResponse);
+    }
+
+    public static FoodOptionRsvpResponse ToFoodOptionRsvpResponse(this FoodOption foodOption)
+    {
+        return new FoodOptionRsvpResponse(foodOption.Id,
+                                          foodOption.Name);
+    }
+
+    public static GuestRsvpResponse ToGuestRsvpResponse(this Guest guest)
+    {
+        return new GuestRsvpResponse(guest.Id,
+                                     guest.Name);
     }
 }

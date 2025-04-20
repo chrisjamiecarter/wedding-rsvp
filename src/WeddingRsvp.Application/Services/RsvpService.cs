@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WeddingRsvp.Application.Database;
 using WeddingRsvp.Application.Entities;
+using WeddingRsvp.Application.Enums;
 using WeddingRsvp.Application.Models;
 using WeddingRsvp.Application.Shared;
 
@@ -21,6 +22,14 @@ internal class RsvpService : IRsvpService
     public async Task<Invite?> GetAsync(Guid inviteId, Guid token, CancellationToken cancellationToken = default)
     {
         return await _dbContext.Invites.SingleOrDefaultAsync(p => p.Id == inviteId && p.Token == token, cancellationToken);
+    }
+
+    public async Task<IEnumerable<FoodOption>> GetFoodOptionsAsync(Guid inviteId, Guid token, FoodType foodType, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Invites.Where(i => i.Id == inviteId && i.Token == token)
+                                       .Join(_dbContext.FoodOptions, invite => invite.EventId, foodOption => foodOption.EventId, (invite, foodOption) => foodOption)
+                                       .Where(f => f.FoodType == foodType)
+                                       .ToListAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<Guest>> GetGuestsAsync(Guid inviteId, Guid token, CancellationToken cancellationToken = default)

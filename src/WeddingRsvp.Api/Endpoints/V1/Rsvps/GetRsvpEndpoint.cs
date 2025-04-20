@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WeddingRsvp.Api.Mappings.V1;
 using WeddingRsvp.Application.Cache;
+using WeddingRsvp.Application.Enums;
 using WeddingRsvp.Application.Services;
 using WeddingRsvp.Contracts.Requests.V1.Rsvps;
 using WeddingRsvp.Contracts.Responses.V1.Rsvps;
@@ -42,7 +43,11 @@ public static class GetRsvpEndpoint
 
                 var guests = await rsvpService.GetGuestsAsync(invite.Id, request.Token.Value, cancellationToken);
 
-                return TypedResults.Ok(invite.ToGetRsvpResponse(guests));
+                var mains = await rsvpService.GetFoodOptionsAsync(inviteId, request.Token.Value, FoodType.Main, cancellationToken);
+                
+                var desserts = await rsvpService.GetFoodOptionsAsync(inviteId, request.Token.Value, FoodType.Dessert, cancellationToken);
+
+                return TypedResults.Ok(invite.ToGetRsvpResponse(guests, mains, desserts));
             })
             .WithName(Name)
             .Produces<GetRsvpResponse>(StatusCodes.Status200OK)
