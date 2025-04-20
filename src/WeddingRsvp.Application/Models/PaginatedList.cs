@@ -18,7 +18,7 @@ public sealed class PaginatedList<T>
         PageNumber = pageNumber;
         PageSize = pageSize;
         TotalCount = count;
-        TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+        TotalPages = (count == 0) ? 1 : (int)Math.Ceiling(count / (double)pageSize);
     }
 
     public static PaginatedList<T> Create(IEnumerable<T> items, int count, int pageNumber, int pageSize)
