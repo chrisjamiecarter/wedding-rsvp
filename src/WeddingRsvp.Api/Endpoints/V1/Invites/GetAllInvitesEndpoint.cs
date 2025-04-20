@@ -2,6 +2,7 @@
 using WeddingRsvp.Application.Auth;
 using WeddingRsvp.Application.Cache;
 using WeddingRsvp.Application.Services;
+using WeddingRsvp.Contracts.Requests.V1.Invites;
 using WeddingRsvp.Contracts.Responses.V1.Invites;
 
 namespace WeddingRsvp.Api.Endpoints.V1.Invites;
@@ -14,10 +15,13 @@ public static class GetAllInvitesEndpoint
     {
         app.MapGet(Routes.Events.GetAllInvites,
             async (Guid eventId,
+                   [AsParameters] GetAllInvitesRequest request,
                    IInviteService inviteService,
                    CancellationToken cancellationToken) =>
             {
-                var invites = await inviteService.GetByEventIdAsync(eventId, cancellationToken);
+                var options = request.ToOptions(eventId);
+
+                var invites = await inviteService.GetAllAsync(options, cancellationToken);
 
                 return TypedResults.Ok(invites.ToResponse());
             })

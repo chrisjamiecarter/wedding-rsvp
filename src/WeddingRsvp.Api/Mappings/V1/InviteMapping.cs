@@ -1,4 +1,5 @@
 ﻿using WeddingRsvp.Application.Entities;
+using WeddingRsvp.Application.Models;
 using WeddingRsvp.Contracts.Requests.V1.Invites;
 using WeddingRsvp.Contracts.Responses.V1.Invites;
 
@@ -39,8 +40,15 @@ public static class InviteMapping
                                   entity.EventId);
     }
 
-    public static InvitesResponse ToResponse(this IEnumerable<Invite> entities)
+    public static InvitesResponse ToResponse(this PaginatedList<Invite> entities)
     {
-        return new InvitesResponse(entities.Select(ToResponse));
+        return new InvitesResponse
+        {
+            Items = entities.Items.Select(ToResponse),
+            PageNumber = entities.PageNumber,
+            PageSize = entities.PageSize,
+            TotalCount = entities.TotalCount,
+            TotalPages = entities.TotalPages,
+        };
     }
 }
