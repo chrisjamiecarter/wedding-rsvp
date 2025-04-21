@@ -74,6 +74,13 @@ export type InviteRsvp = {
   desserts: FoodRsvp[];
 };
 
+export const RsvpStatuses = ["Attending", "NotAttending"] as const;
+
+export const RsvpStatusOptions = [
+  { value: "Attending", label: "Attending" },
+  { value: "NotAttending", label: "Not Attending" },
+];
+
 export type GuestRsvp = {
   guestId: string;
   name: string;
