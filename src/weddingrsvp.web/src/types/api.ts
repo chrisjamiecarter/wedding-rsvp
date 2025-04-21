@@ -70,9 +70,16 @@ export type GuestDetail = Entity<{
 export type InviteRsvp = {
   token: string;
   guests: GuestRsvp[];
+  mains: FoodRsvp[];
+  desserts: FoodRsvp[];
 };
 
 export type GuestRsvp = {
   guestId: string;
+  name: string;
+};
+
+export type FoodRsvp = {
+  foodOptionId: string;
   name: string;
 };

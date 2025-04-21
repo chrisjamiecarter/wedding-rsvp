@@ -13,12 +13,22 @@ import { useForm } from "@mantine/form";
 import { useEffect } from "react";
 
 const Rsvp = ({ inviteId, token }: { inviteId: string; token: string }) => {
+  const rsvpQuery = useRsvp({
+    inviteId,
+    token,
+  });
+
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
       inviteId: inviteId,
       token: token,
-      guests: [
+      guests: rsvpQuery.data?.guests.map((guest) => ({
+        guestId: guest.guestId,
+        name: guest.name,
+        mainFoodOptionId: "",
+        dessertFoodOptionId: "",
+      })) || [
         {
           guestId: "",
           name: "",
@@ -29,24 +39,6 @@ const Rsvp = ({ inviteId, token }: { inviteId: string; token: string }) => {
     },
   });
 
-  const rsvpQuery = useRsvp({
-    inviteId,
-    token,
-  });
-
-  useEffect(() => {
-    if (rsvpQuery.data) {
-      const mappedGuests = rsvpQuery.data.guests.map((guest) => ({
-        guestId: guest.guestId,
-        name: guest.name,
-        mainFoodOptionId: "",
-        dessertFoodOptionId: "",
-      }));
-
-      form.setValues({ inviteId, token, guests: mappedGuests });
-    }
-  }, [inviteId, token, rsvpQuery.data]);
-
   if (rsvpQuery.isLoading) {
     return <LoadingPage />;
   }
@@ -54,6 +46,22 @@ const Rsvp = ({ inviteId, token }: { inviteId: string; token: string }) => {
   const rsvp = rsvpQuery.data;
 
   if (!rsvp) return null;
+
+  const mainOptions = [
+    { label: "Select Main", value: "", disabled: true },
+    ...rsvp.mains.map((main) => ({
+      label: main.name,
+      value: main.foodOptionId,
+    })),
+  ];
+
+  const dessertOptions = [
+    { label: "Select Dessert", value: "", disabled: true },
+    ...rsvp.desserts.map((dessert) => ({
+      label: dessert.name,
+      value: dessert.foodOptionId,
+    })),
+  ];
 
   const fields = form.getValues().guests.map((item, index) => (
     <Card key={item.guestId} shadow="xs" p="lg" radius="md" withBorder>
@@ -63,22 +71,14 @@ const Rsvp = ({ inviteId, token }: { inviteId: string; token: string }) => {
       <NativeSelect
         mt="xs"
         label="Main"
-        data={[
-          { label: "Select Main", value: "", disabled: true },
-          { label: "Lamb Roast", value: "test-main-1" },
-          { label: "Chicken Roast", value: "test-main-2" },
-        ]}
+        data={mainOptions}
         key={form.key(`guests.${index}.mainFoodOptionId`)}
         {...form.getInputProps(`guests.${index}.mainFoodOptionId`)}
       />
       <NativeSelect
         mt="xs"
         label="Dessert"
-        data={[
-          { label: "Select Dessert", value: "" },
-          { label: "Chocolate Cake", value: "test-dessert-1" },
-          { label: "Strawberry Cheesecake", value: "test-dessert-2" },
-        ]}
+        data={dessertOptions}
         key={form.key(`guests.${index}.dessertFoodOptionId`)}
         {...form.getInputProps(`guests.${index}.dessertFoodOptionId`)}
       />
