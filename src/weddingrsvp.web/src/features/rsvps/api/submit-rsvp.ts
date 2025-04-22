@@ -19,22 +19,19 @@ export const submitRsvpInputSchema = z.object({
           rsvpStatus: z.enum(RsvpStatuses, {
             errorMap: () => ({ message: "Please confirm if attending or not" }),
           }),
-          mainFoodOptionId: z.string().optional(),
-          dessertFoodOptionId: z.string().optional(),
+          mainFoodOptionId: z.string().nullable().optional(),
+          dessertFoodOptionId: z.string().nullable().optional(),
         })
         .superRefine((guest, ctx) => {
           if (guest.rsvpStatus === "Attending") {
-            if (!guest.mainFoodOptionId || guest.mainFoodOptionId === "") {
+            if (!guest.mainFoodOptionId) {
               ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 message: "Please select a main course",
                 path: ["mainFoodOptionId"],
               });
             }
-            if (
-              !guest.dessertFoodOptionId ||
-              guest.dessertFoodOptionId === ""
-            ) {
+            if (!guest.dessertFoodOptionId) {
               ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 message: "Please select a dessert",
@@ -42,7 +39,7 @@ export const submitRsvpInputSchema = z.object({
               });
             }
           } else if (guest.rsvpStatus === "NotAttending") {
-            if (guest.mainFoodOptionId || guest.mainFoodOptionId !== "") {
+            if (guest.mainFoodOptionId) {
               ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 message:
@@ -50,7 +47,7 @@ export const submitRsvpInputSchema = z.object({
                 path: ["mainFoodOptionId"],
               });
             }
-            if (guest.dessertFoodOptionId || guest.dessertFoodOptionId !== "") {
+            if (guest.dessertFoodOptionId) {
               ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 message:

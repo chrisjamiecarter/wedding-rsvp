@@ -12,16 +12,29 @@ import {
 import { useForm, zodResolver } from "@mantine/form";
 import { RsvpStatusOptions } from "@/types/api";
 import { useEffect, useRef } from "react";
-import { submitRsvpInputSchema } from "../api/submit-rsvp";
+import { submitRsvpInputSchema, useSubmitRsvp } from "../api/submit-rsvp";
+import CustomNotifications from "@/components/ui/notifications/notifications";
 
 const Rsvp = ({ inviteId, token }: { inviteId: string; token: string }) => {
+  // Use a ref to track initialization state
+  const initialized = useRef(false);
+
   const rsvpQuery = useRsvp({
     inviteId,
     token,
   });
 
-  // Use a ref to track initialization state
-  const initialized = useRef(false);
+  const submitRsvpMutation = useSubmitRsvp({
+    inviteId,
+    mutationConfig: {
+      onSuccess: () => {
+        CustomNotifications.success({
+          title: "RSVP Submitted",
+          message: "",
+        });
+      },
+    },
+  });
 
   const form = useForm({
     mode: "uncontrolled",
@@ -142,12 +155,28 @@ const Rsvp = ({ inviteId, token }: { inviteId: string; token: string }) => {
 
   return (
     <form
-      id="create-rsvp"
-      onSubmit={form.onSubmit((values) =>
-        console.log("Form submitted: ", values)
-      )}>
+      id="submit-rsvp"
+      onSubmit={form.onSubmit((values) => {
+        const transformedValues = {
+          ...values,
+          guests: values.guests.map((guest) => ({
+            ...guest,
+            mainFoodOptionId:
+              guest.mainFoodOptionId === "" ? null : guest.mainFoodOptionId,
+            dessertFoodOptionId:
+              guest.dessertFoodOptionId === ""
+                ? null
+                : guest.dessertFoodOptionId,
+          })),
+        };
+
+        const data = submitRsvpInputSchema.parse(transformedValues);
+        submitRsvpMutation.mutate({ data });
+      })}>
       <Group justify="end">
-        <Button type="submit">Submit</Button>
+        <Button type="submit" loading={submitRsvpMutation.isPending}>
+          Submit
+        </Button>
       </Group>
       <SimpleGrid cols={4} mt="md">
         {fields}
