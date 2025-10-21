@@ -139,6 +139,9 @@ public static class AssemblyInstaller
 
     public static async Task<IServiceProvider> SeedDatabaseAsync(this IServiceProvider serviceProvider)
     {
+        var db = serviceProvider.GetRequiredService<ApplicationDbContext>();
+        await db.Database.MigrateAsync();
+
         var seeder = serviceProvider.GetRequiredService<SeederService>();
         await seeder.SeedDatabaseAsync();
 
