@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "WeddingRsvp",
+    "Projects": [
+      {
+        "Path": "src\\WeddingRsvp.Api\\WeddingRsvp.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "src\\WeddingRsvp.Web\\weddingrsvp.web.esproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
