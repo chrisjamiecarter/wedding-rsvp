@@ -18,9 +18,14 @@ export const signinInputSchema = z.object({
 
 export type SigninInput = z.infer<typeof signinInputSchema>;
 
-const getUser = async (): Promise<User> => {
-  const response = (await api.get("/api/auth/me")) as { user: User };
-  return response.user;
+const getUser = async (): Promise<User | null> => {
+  try {
+    const response = (await api.get("/api/auth/me")) as { user: User };
+    return response.user;
+  } catch (error) {
+    const response = { user: null } as { user: User | null };
+    return response.user;
+  }
 };
 
 const signin = (data: SigninInput): Promise<void> => {
